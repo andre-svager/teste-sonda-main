@@ -66,6 +66,7 @@ Another Points:
 
 ```mermaid
 sequenceDiagram
+alt teste
 Probe ->> Earth: arrive
 Planet-->>Probe: done
 Probe ->> Planet: send confirmation
@@ -76,6 +77,7 @@ Note right of Earth: Planet thinks a long<br/>long time, so long<br/>that the te
 
 Earth-->Probe: Checking with Planet...
 Probe->Planet: Yes... Earth, how are you?
+end
 ```
 
 
