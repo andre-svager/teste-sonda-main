@@ -32,17 +32,14 @@ Command Sequence from Earth to a Probe :
  - Open API Documentation
  - Microservicos Segregation (Bounded Contexts): Scalability, Disponibility and Performance
 
-Business Challenge
+> Business Challenge
  - Web Contract
     - How get a Set of Probes in a existing Planet ?
     - How to Move arrvived Probe ?
 
-### Sobre modelagem de código:
 - Limited Surface and set of Probes in movement
-  > Consideration 1
     - Probes shall not share same Carthesian Points
        - Obs: Consider Probe size 1x1
-  > Consideration 2
     - Probes should be limited a Planet Size
        - Carthersian Points of Probe must be less than Planet Size 
 
