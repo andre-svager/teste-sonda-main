@@ -46,12 +46,30 @@
        - Carthersian Points of Probe must be less than Planet Size 
 
 
-Outros pontos: 
+### Solution
+
+  - `1` Create Layer to Change Persistence Types
+    -    
+
+Another Points: 
 - https://www.alura.com.br/artigos/nao-aprender-oo-getters-e-setters
 - https://www.alura.com.br/artigos/o-que-e-modelo-anemico-e-por-que-fugir-dele
-
-./mvnw spring-boot:run`
-
-```bash
-curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":10,"height":10,"probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
+- ./mvnw spring-boot:run`
+- ```bash
+  curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":10,"height":10,"probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
 ```
+
+
+
+```mermaid
+sequenceDiagram
+Alice ->> Bob: Hello Bob, how are you?
+Bob-->>John: How about you John?
+Bob--x Alice: I am good thanks!
+Bob-x John: I am good thanks!
+Note right of John: Bob thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.
+
+Bob-->Alice: Checking with John...
+Alice->John: Yes... John, how are you?
+```
+
