@@ -55,10 +55,6 @@ Another Points:
 - https://www.alura.com.br/artigos/nao-aprender-oo-getters-e-setters
 - https://www.alura.com.br/artigos/o-que-e-modelo-anemico-e-por-que-fugir-dele
 - ./mvnw spring-boot:run`
-- ```bash
-  curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":10,"height":10,"probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
-```
-
 
 
 ```mermaid
