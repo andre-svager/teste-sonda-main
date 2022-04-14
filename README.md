@@ -9,9 +9,9 @@ Examples with BDD
 Given a Planet, with Size : 5x5
 
 Scenario 1
-When Probe Positon: x=1, y=2 North
-And Command Sequence: LMLMLMLMM
-Then Final Probe Position: x=1 y=3 North
+ - When Probe Positon: x=1, y=2 North
+ - And Command Sequence: LMLMLMLMM
+ - Then Final Probe Position: x=1 y=3 North
 
 Scenario2
 When Probe Positon: x=3, y=3 East (leste)
