@@ -66,7 +66,8 @@ Another Points:
 
 ```mermaid
 sequenceDiagram
-Probe ->> Planet: insert
+Probe ->> Earth: arrive
+Probe ->> Earth: send confirmation
 Planet-->>Earth: ok?
 Earth--x Probe: good!
 Earth-x Planet: oggd too
