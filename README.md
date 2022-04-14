@@ -65,19 +65,33 @@ Another Points:
 
 
 ```mermaid
-sequenceDiagram
-alt teste
-Probe ->> Earth: arrive
-Planet-->>Probe: done
-Probe ->> Planet: send confirmation
-Planet-->>Earth: ok?
-Earth--x Probe: good!
-Earth-x Planet: oggd too
-Note right of Earth: Planet thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.
+%%{init: {'theme': 'dark' } }%%
 
-Earth-->Probe: Checking with Planet...
-Probe->Planet: Yes... Earth, how are you?
-end
+graph TD
+    subgraph Application Layer
+    A[ProbeContoller]
+    end
+    subgraph Domain Layer
+    PS(ProbeService)
+    subgraph _
+        DPS(DomainProbeService)
+        P(Probe)
+    end
+    PR(ProbeRepository)
+    end
+    subgraph Infrastructure Layer
+    MDB(MongoDBProbeRepository)
+    MDC(MongoDBConfiguration)
+    BC(BeanConfiguration)
+    end
+    
+    DPS --> PS
+    A --> PS
+    DPS --> P
+    P --> DPS
+    DPS --> PR
+    MDB --> PR
+    
 ```
 
 
