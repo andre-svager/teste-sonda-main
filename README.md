@@ -48,8 +48,13 @@
 
 ### Solution
 
-  - `1` Create Layer to Change Persistence Types
-    -    
+  - `1` Add Spring Data to a project
+  - `2` Add Lombok to a Project to omitt getters and setters
+  - `3` 
+  - `4` 
+  - `TODO` Create Layers to Segregate Persistence Types and 
+    - Higher level must never depend on a lower one. 
+      - https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 
 Another Points: 
 - https://www.alura.com.br/artigos/nao-aprender-oo-getters-e-setters
@@ -57,15 +62,23 @@ Another Points:
 - ./mvnw spring-boot:run`
 
 
+
+
 ```mermaid
 sequenceDiagram
-Alice ->> Bob: Hello Bob, how are you?
-Bob-->>John: How about you John?
-Bob--x Alice: I am good thanks!
-Bob-x John: I am good thanks!
-Note right of John: Bob thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.
+Probe ->> Planet: insert
+Planet-->>Earth: ok?
+Earth--x Probe: good!
+Earth-x Planet: oggd too
+Note right of Earth: Planet thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.
 
-Bob-->Alice: Checking with John...
-Alice->John: Yes... John, how are you?
+Earth-->Probe: Checking with Planet...
+Probe->Planet: Yes... Earth, how are you?
+```
+
+
+
+- ```bash
+  curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":10,"height":10,"probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
 ```
 
