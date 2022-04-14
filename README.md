@@ -1,8 +1,8 @@
-## Smart Sonda
+## Smart Probe
 
-Explore Planets with an Probe
-Planet area is a Carthesian Plan
-Data received by system should contains: Planets, Probes and Commands throught REST interface.
+`1` Explore Planets with an Probe
+`2` Planet area is a Carthesian Plan
+`3` Data received by system should contains: Planets, Probes and Commands throught REST interface.
 
 Examples with BDD
 
@@ -16,34 +16,35 @@ Then Final Probe Position: x=1 y=3 North
 Scenario2
 When Probe Positon: x=3, y=3 East (leste)
 And Command Sequence: MMRMMRMRRML
-Then Final Probe Position: x=5 y=1 face para North
+Then Final Probe Position: x=5 y=1 North
 
-Command Sequence from Earth to a Sonda :
+Command Sequence from Earth to a Probe :
 - `M` -> Moving Foward 1 position
 - `L` -> Turn left (90 graus)
 - `R` -> Turn right (90 graus)
 
 
 Techinical Challenges
- - Levantamento de Padroes (GOF, SOLID)
- - Colocar Boas Praticas (Clean Code)
- - As responsabilidades estão bem distribuídas no código? Como melhorar?
- - Persistencia multi-database (Onion - Hexagonal)
- - Open API para documentar 
- - Decomposicao em Microservicos (Bounded Contexts): Escalabilidade, Disponibilidade e Performance
+ - Design Pattern (evaluate)
+ - Clean Code
+ - Responsability segregation (SOLID)
+ - Multi Databases Persistence (Onion - Hexagonal)
+ - Open API
+ - Microservicos Segregation (Bounded Contexts): Scalability, Disponibility and Performance
 
 Business Challenge
-Contrato Web
-  Como eu cadastro mais sondas em um planeta existente?
-  Como eu movo uma sonda já pousada?
+Web Contract
+  How get a Set of Probes in a existing Planet ?
+  How to Move arrvived Probe ?
 
 ### Sobre modelagem de código:
-- Superfície limitada e várias sondas em movimento
-  Consideracao 1
-    Sondas n~ao podem ocupar mesmos pontos cartesianos
-      Obs: considerando tamnaho da sonda de 1x1
-  Consideracao 2
-    Sondas devem se limitar ao tamanho do planeta
+- Limited Surface and set of Probes in movement
+  Consideration 1
+    Probes shall not share same Carthesian Points
+      Obs: Consider Probe size 1x1
+  Consideration 2
+    Probes should be limited a Planet Size
+      Carthersian Points of Probe must be less than Planet Size 
 
 
 Outros pontos: 
