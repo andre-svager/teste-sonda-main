@@ -14,9 +14,9 @@ Scenario 1
  - Then Final Probe Position: x=1 y=3 North
 
 Scenario2
-When Probe Positon: x=3, y=3 East (leste)
-And Command Sequence: MMRMMRMRRML
-Then Final Probe Position: x=5 y=1 North
+ - When Probe Positon: x=3, y=3 East (leste)
+ - And Command Sequence: MMRMMRMRRML
+ - Then Final Probe Position: x=5 y=1 North
 
 Command Sequence from Earth to a Probe :
 - `M` -> Moving Foward 1 position
@@ -25,26 +25,26 @@ Command Sequence from Earth to a Probe :
 
 
 Techinical Challenges
- - Design Pattern (evaluate)
- - Clean Code
- - Responsability segregation (SOLID)
- - Multi Databases Persistence (Onion - Hexagonal)
- - Open API
- - Microservicos Segregation (Bounded Contexts): Scalability, Disponibility and Performance
+ > Design Pattern (evaluate)
+ > Clean Code
+ > Responsability segregation (SOLID)
+ > Multi Databases Persistence (Onion - Hexagonal)
+ > Open API Documentation
+ > Microservicos Segregation (Bounded Contexts): Scalability, Disponibility and Performance
 
 Business Challenge
-Web Contract
-  How get a Set of Probes in a existing Planet ?
-  How to Move arrvived Probe ?
+ - Web Contract
+    - How get a Set of Probes in a existing Planet ?
+    - How to Move arrvived Probe ?
 
 ### Sobre modelagem de código:
 - Limited Surface and set of Probes in movement
-  Consideration 1
-    Probes shall not share same Carthesian Points
-      Obs: Consider Probe size 1x1
+  > Consideration 1
+    - Probes shall not share same Carthesian Points
+       - Obs: Consider Probe size 1x1
   Consideration 2
-    Probes should be limited a Planet Size
-      Carthersian Points of Probe must be less than Planet Size 
+    - Probes should be limited a Planet Size
+       - Carthersian Points of Probe must be less than Planet Size 
 
 
 Outros pontos: 
