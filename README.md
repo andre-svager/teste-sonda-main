@@ -4,6 +4,7 @@
 - `2` Planet area is a Carthesian Plan
 - `3` Data received by system should contains: Planets, Probes and Commands throught REST interface.
 
+
 ### Examples with BDD
 
 > Given a Planet, with Size : 5x5
@@ -18,13 +19,14 @@
   - And Command Sequence: MMRMMRMRRML
   - Then Final Probe Position: x=5 y=1 North
 
-Command Sequence from Earth to a Probe :
+
+### Command Sequence from Earth to a Probe :
 - `M` -> Moving Foward 1 position
 - `L` -> Turn left (90 graus)
 - `R` -> Turn right (90 graus)
 
 
-> Techinical Challenges
+### Techinical Challenges
  - Design Pattern (evaluate)
  - Clean Code
  - Responsability segregation (SOLID)
@@ -32,7 +34,7 @@ Command Sequence from Earth to a Probe :
  - Open API Documentation
  - Microservicos Segregation (Bounded Contexts): Scalability, Disponibility and Performance
 
-> Business Challenge
+### Business Challenge
  - Web Contract
     - How get a Set of Probes in a existing Planet ?
     - How to Move arrvived Probe ?
