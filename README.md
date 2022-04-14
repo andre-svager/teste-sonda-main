@@ -1,22 +1,22 @@
 ## Smart Probe
 
-`1` Explore Planets with an Probe
-`2` Planet area is a Carthesian Plan
-`3` Data received by system should contains: Planets, Probes and Commands throught REST interface.
+- `1` Explore Planets with an Probe
+- `2` Planet area is a Carthesian Plan
+- `3` Data received by system should contains: Planets, Probes and Commands throught REST interface.
 
-Examples with BDD
+### Examples with BDD
 
-Given a Planet, with Size : 5x5
+> Given a Planet, with Size : 5x5
 
-Scenario 1
- - When Probe Positon: x=1, y=2 North
- - And Command Sequence: LMLMLMLMM
- - Then Final Probe Position: x=1 y=3 North
+>> Scenario 1
+  - When Probe Positon: x=1, y=2 North
+  - And Command Sequence: LMLMLMLMM
+  - Then Final Probe Position: x=1 y=3 North
 
-Scenario2
- - When Probe Positon: x=3, y=3 East (leste)
- - And Command Sequence: MMRMMRMRRML
- - Then Final Probe Position: x=5 y=1 North
+>> Scenario2
+  - When Probe Positon: x=3, y=3 East (leste)
+  - And Command Sequence: MMRMMRMRRML
+  - Then Final Probe Position: x=5 y=1 North
 
 Command Sequence from Earth to a Probe :
 - `M` -> Moving Foward 1 position
