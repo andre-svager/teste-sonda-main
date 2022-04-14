@@ -24,13 +24,13 @@ Command Sequence from Earth to a Probe :
 - `R` -> Turn right (90 graus)
 
 
-Techinical Challenges
- > Design Pattern (evaluate)
- > Clean Code
- > Responsability segregation (SOLID)
- > Multi Databases Persistence (Onion - Hexagonal)
- > Open API Documentation
- > Microservicos Segregation (Bounded Contexts): Scalability, Disponibility and Performance
+> Techinical Challenges
+ - Design Pattern (evaluate)
+ - Clean Code
+ - Responsability segregation (SOLID)
+ - Multi Databases Persistence (Onion - Hexagonal)
+ - Open API Documentation
+ - Microservicos Segregation (Bounded Contexts): Scalability, Disponibility and Performance
 
 Business Challenge
  - Web Contract
@@ -42,7 +42,7 @@ Business Challenge
   > Consideration 1
     - Probes shall not share same Carthesian Points
        - Obs: Consider Probe size 1x1
-  Consideration 2
+  > Consideration 2
     - Probes should be limited a Planet Size
        - Carthersian Points of Probe must be less than Planet Size 
 
