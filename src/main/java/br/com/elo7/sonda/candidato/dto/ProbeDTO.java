@@ -1,5 +1,8 @@
 package br.com.elo7.sonda.candidato.dto;
 
+import br.com.elo7.sonda.candidato.domain.model.Planet;
+import br.com.elo7.sonda.candidato.domain.model.Probe;
+
 public class ProbeDTO {
 	private int x; 
 	private int y;
@@ -29,5 +32,9 @@ public class ProbeDTO {
 	}
 	public void setCommands(String commands) {
 		this.commands = commands;
+	}
+
+	public Probe convertProbe(Planet planet) {
+		return new Probe(planet, this.getX(), this.getY(), this.getDirection());
 	}
 }

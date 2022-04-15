@@ -1,5 +1,7 @@
 package br.com.elo7.sonda.candidato.dto;
 
+import br.com.elo7.sonda.candidato.domain.model.Planet;
+
 import java.util.List;
 
 public class InputDTO {
@@ -24,5 +26,9 @@ public class InputDTO {
 	}
 	public void setProbes(List<ProbeDTO> probes) {
 		this.probes = probes;
+	}
+
+	public Planet concertPlanet(InputDTO input) {
+		return new Planet(input.getHeight(), input.getWidth());
 	}
 }

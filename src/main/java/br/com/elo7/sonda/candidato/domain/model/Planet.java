@@ -1,10 +1,17 @@
-package br.com.elo7.sonda.candidato.model;
+package br.com.elo7.sonda.candidato.domain.model;
 
 public class Planet {
 	private int id;
 	private int width;
 	private int height;
-	
+
+	public Planet(int height, int width) {
+		this.height = height;
+		this.width = width;
+	}
+
+	public Planet(){}
+
 	@Override
 	public int hashCode() {
 		return id;
