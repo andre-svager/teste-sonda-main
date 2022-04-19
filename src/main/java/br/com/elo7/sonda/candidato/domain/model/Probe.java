@@ -1,11 +1,28 @@
 package br.com.elo7.sonda.candidato.domain.model;
 
+import br.com.elo7.sonda.candidato.domain.ProbeOutOfRangeException;
+
 public class Probe {
 	private int id;
 	private int x;
 	private int y;
 	private char direction;
 	private Planet planet;
+	private String commands;
+
+	public Probe( int x, int y, char direction) {
+		this.x = x;
+		this.y = y;
+		this.direction = direction;
+	}
+
+	public Probe(Planet planet, int x, int y, char direction, String commands) {
+		this.x = x;
+		this.y = y;
+		this.direction = direction;
+		this.planet = planet;
+		this.commands = commands;
+	}
 
 	public Probe( Planet planet, int x, int y, char direction) {
 		this.x = x;
@@ -14,97 +31,73 @@ public class Probe {
 		this.planet = planet;
 	}
 
-	public Probe(){}
+	//TODO Refactor to remove this dependency from InMemoryDatabase
+	public int getId() { return id; }
 
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getX() {
-		return x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
-	public char getDirection() {
-		return direction;
-	}
-	public void setDirection(char direction) {
-		this.direction = direction;
-	}
-	public Planet getPlanet() {
-		return planet;
-	}
-	public void setPlanet(Planet planet) {
-		this.planet = planet;
+	public void setId(int id) {	this.id = id; }
+
+	public char getDirection(){ return this.direction; }
+
+	public int getX() { return this.x; }
+
+	public int getY() {	return this.y; }
+
+	public Planet getPlanet(){
+		return this.planet;
 	}
 
-	public void moveProbeForward(Probe probe) {
-		int newX = probe.getX();
-		int newY = probe.getY();
-		switch (probe.getDirection()) {
-			case Direction.N:
-				newY++;
-				break;
-			case Direction.W:
-				newX--;
-				break;
-			case Direction.S:
-				newY--;
-				break;
-			case Direction.E:
-				newX++;
-				break;
+	public void moveProbeYAxis() {
+		switch (this.direction) {
+			case Direction.N: this.y++; break;
+			case Direction.S: this.y--; break;
 		}
-		probe.setX(newX);
-		probe.setY(newY);
 	}
 
-	public void turnProbeLeft(Probe probe) {
-		char newDirection = Direction.N;
-		switch (probe.getDirection()) {
-			case Direction.N:
-				newDirection = Direction.W;
-				break;
-			case Direction.W:
-				newDirection = Direction.S;
-				break;
-			case Direction.S:
-				newDirection = Direction.E;
-				break;
-			case Direction.E:
-				newDirection = Direction.N;
-				break;
+	public void moveProbeXAxis() {
+		switch (this.direction) {
+			case Direction.E: this.x++; break;
+			case Direction.W: this.x--; break;
 		}
-		probe.setDirection(newDirection);
 	}
 
-	public void turnProbeRight(Probe probe) {
-		char newDirection = Direction.N;
-		switch (probe.getDirection()) {
-			case Direction.N:
-				newDirection = Direction.E;
-				break;
-			case Direction.E:
-				newDirection = Direction.S;
-				break;
-			case Direction.S:
-				newDirection = Direction.W;
-				break;
-			case Direction.W:
-				newDirection = Direction.N;
-				break;
+	public void turnProbeRight() {
+		switch (this.direction) {
+			case Direction.N: this.direction = Direction.E; break;
+			case Direction.E: this.direction = Direction.S; break;
+			case Direction.S: this.direction = Direction.W; break;
+			case Direction.W: this.direction = Direction.N; break;
 		}
-		System.out.println(newDirection);
-		probe.setDirection(newDirection);
 	}
 
+	public void turnProbeLeft() {
+		switch (this.direction) {
+			case Direction.N: this.direction = Direction.W; break;
+			case Direction.W: this.direction = Direction.S; break;
+			case Direction.S: this.direction = Direction.E; break;
+			case Direction.E: this.direction = Direction.N; break;
+		}
+	}
+
+	public void applyCommandToProbe(char command) {
+		switch (command) {
+			case Command.R: this.turnProbeRight(); break;
+			case Command.L: this.turnProbeLeft();  break;
+			case Command.M: this.moveProbeXAxis();
+							this.moveProbeYAxis(); break;
+		}
+	}
+
+	public Probe moveProbeWithAllCommands() throws RuntimeException {
+		for (char command : this.commands.toCharArray()) {
+			this.applyCommandToProbe(command);
+		}
+		verifyIfProbeInsideOfPlanet();
+		return this;
+	}
+
+	public void verifyIfProbeInsideOfPlanet() throws ProbeOutOfRangeException {
+		if(this.y >= this.planet.getHeight() || this.x >= this.planet.getWidth() ) {
+			throw new ProbeOutOfRangeException();
+		}
+	}
 }

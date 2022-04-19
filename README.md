@@ -4,27 +4,26 @@
 - `2` Planet area is a Cartesian Plan
 - `3` Data received by system should contain: Planets, Probes and Commands thought REST interface.
 
-
-### Examples with BDD
-
-> Given a Planet, with Size : 5x5
-
->> Scenario 1
-  - When Probe Position: x=1, y=2 North
-  - And Command Sequence: LMLMLMLMM
-  - Then Final Probe Position: x=1 y=3 North
-
->> Scenario2
-  - When Probe Position: x=3, y=3 East (leste)
-  - And Command Sequence: MMRMMRMRRML
-  - Then Final Probe Position: x=5 y=1 North
-
-
 ### Command Sequence from Earth to a Probe :
 - `M` -> Moving Forward 1 position
 - `L` -> Turn left (90 graus)
 - `R` -> Turn right (90 graus)
 
+
+### Examples with BDD
+
+> Given a Planet, with Size : 5x5
+
+> Scenario 1
+  - When Probe Position: x=1, y=2 North
+  - And Command Sequence: LMLMLMLMM
+  - Then Final Probe Position: x=1 y=3 North
+
+> Scenario2
+  - When Probe Position: x=3, y=3 East (leste)
+  - And Command Sequence: MMRMMRMRRML
+  - Then Final Probe Position: x=5 y=1 North
+  
 
 ### Technical Challenges
  - Design Pattern (evaluate)
@@ -55,9 +54,9 @@
 
 ### Solution
 
-  - `1` Add Spring Data to a project
+  - `1` Run: docker-compose up in infra directory : teste-sonda-main > src> infra
   - `2` Add Lombok to a Project to omit getters and setters
-  - `3` 
+  - `3` Add Spring Data to a project
   - `4` 
   - `TODO` Create Layers to Segregate Persistence Types and 
     - Higher level must never depend on a lower one. 
@@ -75,18 +74,24 @@ Another Points:
 graph TD
     subgraph Application Layer
     A[ProbeContoller]
+    IDTO[InputDTO]
+    PDTO[ProbeDTO]
     end
     subgraph Domain Layer
     PS(ProbeService)
     subgraph _
         DPS(DomainProbeService)
         P(Probe)
+        PLN(Planet)
     end
     PR(ProbeRepository)
+    PL(PlanetRepository)
     end
     subgraph Infrastructure Layer
     MDB(MongoDBProbeRepository)
     MDC(MongoDBConfiguration)
+    CB(CassandraProbeRepository)
+    CC(CassandraConfiguration)
     BC(BeanConfiguration)
     end
     
@@ -94,13 +99,21 @@ graph TD
     A --> PS
     DPS --> P
     P --> DPS
+    DPS --> PLN
+    PLN --> DPS
     DPS --> PR
     MDB --> PR
+    CB --> PR
+    MDB --> PL
+    CB --> PL
+    IDTO --> A
+    PDTO --> A
 ```
-
-
 
 ```bash
   curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":10,"height":10,"probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
 ```
 
+```openapi
+OpenApi :
+    localhost:8080/swg.html

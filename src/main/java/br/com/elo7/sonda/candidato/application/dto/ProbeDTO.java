@@ -1,4 +1,4 @@
-package br.com.elo7.sonda.candidato.dto;
+package br.com.elo7.sonda.candidato.application.dto;
 
 import br.com.elo7.sonda.candidato.domain.model.Planet;
 import br.com.elo7.sonda.candidato.domain.model.Probe;
@@ -35,6 +35,10 @@ public class ProbeDTO {
 	}
 
 	public Probe convertProbe(Planet planet) {
-		return new Probe(planet, this.getX(), this.getY(), this.getDirection());
+		return new Probe(planet, this.x, this.y, this.direction, this.commands);
+	}
+
+	public String getProbeCommands(){
+		return this.commands;
 	}
 }

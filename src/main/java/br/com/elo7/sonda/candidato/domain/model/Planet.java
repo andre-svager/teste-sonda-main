@@ -1,5 +1,7 @@
 package br.com.elo7.sonda.candidato.domain.model;
 
+import br.com.elo7.sonda.candidato.domain.ProbeOutOfRangeException;
+
 public class Planet {
 	private int id;
 	private int width;
@@ -43,4 +45,5 @@ public class Planet {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+
 }

@@ -10,6 +10,6 @@ public interface ProbesRepository {
 
 	Optional<Probe> findById(int id);
 
-	Optional<Probe> findByCoordinates(int x, int y);
+	//Optional<Probe> findByCoordinates(int x, int y);
 
 }

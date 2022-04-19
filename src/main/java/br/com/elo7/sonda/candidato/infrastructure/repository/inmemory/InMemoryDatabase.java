@@ -59,9 +59,5 @@ class InMemoryDatabase {
 					).findFirst();
 		}
 
-		@Override
-		public Optional<Probe> findByCoordinates(int x, int y) {
-			return Optional.empty();
-		}
 	}
 }
