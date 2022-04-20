@@ -60,20 +60,23 @@
   - `1` Run: docker-compose up in infra directory : teste-sonda-main > infra
   - `2` Add Lombok to a Project to omit getters and setters (Not Necessary)
   - `3` Add Mongo Spring Data to a project dependency (Maven)
-  - `4` Create Layers to Segregate Persistence Types and 
+  - `4` Create Layers to Segregate Persistence Types and Domain Objects
     - Higher level must never depend on a lower one. 
       - https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
-  - `5` To Run Project: ./mvnw spring-boot:run`
+  - `5` Previous DDD references:
+      - https://www.alura.com.br/artigos/nao-aprender-oo-getters-e-setters
+      - https://www.alura.com.br/artigos/o-que-e-modelo-anemico-e-por-que-fugir-dele
 
-Another Points: 
-- https://www.alura.com.br/artigos/nao-aprender-oo-getters-e-setters
-- https://www.alura.com.br/artigos/o-que-e-modelo-anemico-e-por-que-fugir-dele
+```openapi
+localhost:8080/swg.html  -> customized open api documentation
+```
 
+```run
+TO run Project: ./mvnw spring-boot:run`
+```
 
 ```mermaid
-
 %%{init: {'theme': 'dark' } }%%
-
 graph TD
     subgraph Application Layer
     A[ProbeContoller]
@@ -114,17 +117,12 @@ graph TD
 ```
 
 ```bash
-POST with some Planets. Added planetName attribute to identify an Planet
+POST with coordinates. Added planetName attribute to identify an Planet
   curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":10,"height":10,"planetName":"MARS","probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
   curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":20,"height":20,"planetName":"MOON","probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
 ```
 
-```openapi
-Customized OpenApi path:
-    localhost:8080/swg.html
-
-
+````
 InputDTO -> convertProbes
   To keep layers segregated, we should convert:
     application Layers objects -> Domain Objects in own app layer object
-	 
