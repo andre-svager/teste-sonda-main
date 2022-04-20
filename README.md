@@ -28,45 +28,47 @@
 ### Technical Challenges
  - Clean Code
  - Responsibility segregation (SOLID)
- - Multi Databases Persistence Mongo| InMemory (Hexagonal). Necessary change @Principal to activate in interface
+ - Hexagonal architecture (layers segregation)
+ - Multi Databases Persistence (Mongo| InMemory). Switch @Principal between repository interfaces
  - Open API Documentation
  - Scalability, Availability and Performance
-   - Microservices Segregation (Bounded Contexts)
+   - Microservices Segregation (Bounded Contexts) (TODO)
    - Multi Thread or Async Call: WebFlux | Java RX | Vertx (TODO)
    - Cloud environment configuration, like multi A-Z, autoscaling and so on.
 
 ### Business Challenge
  - Web Contract
     - How get a Set of Probes in an existing Planet ?
-        - Planets should have an identifier to Report 
-        - Create a `ControlCenter` if many Planets will be explored
-        - Planet should know all Probes in the ground
+        - Create a Controller to list all Planets (PlanetController)
+        - Planets should have an identifier and search mechanism (planetName) (findByName) 
+        - Create a `ControlCenter` if many Planets will be explored (TODO)
+        - Planet should know all Probes in the ground (TODO)
     - How to Move arrived Probe ?
-      - Probes should have a Identifier
-      - We should know previous state (active | inactive) and position of a Probe to move it
+      - Probes should have a Identifier(TODO)
+      - We should know previous state (active | inactive) and position of a Probe to move it(TODO)
       - With a previous position, we can move a Probe just given it new coordinates 
 
  - Limited Surface and set of Probes in movement
      - Probes shall not share same Cartesian Points (ProbeCollisionException)
-        - Obs: Desconsider Probe
+        - Obs: Disregard Probe
      - Probes should be limited a Planet Size (ProbeOutOfRangeException)
         - Cartesian Points of Probe must be less than Planet Size 
 
 
 ### Solution
 
-  - `1` Run: docker-compose up in infra directory : teste-sonda-main > src> infra
-  - `2` Add Lombok to a Project to omit getters and setters
-  - `3` Add Spring Data to a project
-  - `4` 
-  - `TODO` Create Layers to Segregate Persistence Types and 
+  - `1` Run: docker-compose up in infra directory : teste-sonda-main > infra
+  - `2` Add Lombok to a Project to omit getters and setters (Not Necessary)
+  - `3` Add Mongo Spring Data to a project dependency (Maven)
+  - `4` Create Layers to Segregate Persistence Types and 
     - Higher level must never depend on a lower one. 
       - https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+  - `5` To Run Project: ./mvnw spring-boot:run`
 
 Another Points: 
 - https://www.alura.com.br/artigos/nao-aprender-oo-getters-e-setters
 - https://www.alura.com.br/artigos/o-que-e-modelo-anemico-e-por-que-fugir-dele
-- ./mvnw spring-boot:run`
+
 
 ```mermaid
 
@@ -118,11 +120,11 @@ POST with some Planets. Added planetName attribute to identify an Planet
 ```
 
 ```openapi
-OpenApi :
+Customized OpenApi path:
     localhost:8080/swg.html
 
 
 InputDTO -> convertProbes
   To keep layers segregated, we should convert:
-    application Layers objects -> Domain Objects
+    application Layers objects -> Domain Objects in own app layer object
 	 
