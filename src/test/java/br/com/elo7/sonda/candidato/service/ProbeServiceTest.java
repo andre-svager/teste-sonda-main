@@ -115,7 +115,7 @@ public class ProbeServiceTest {
 	@Test
 	public void should_throw_probe_out_of_range_exception_when_receive_command_outside_of_planet() {
 
-		Probe probe = new Probe(new Planet(2,2), 2, 1, 'S', "LM");
+		Probe probe = new Probe(new Planet(2,2, "MARS"), 2, 1, 'S', "LM");
 		probe.applyCommandToProbe('M');
 
 		ProbeOutOfRangeException thrown = assertThrows(

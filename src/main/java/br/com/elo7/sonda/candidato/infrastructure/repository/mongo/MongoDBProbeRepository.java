@@ -27,8 +27,14 @@ public class MongoDBProbeRepository implements ProbesRepository {
         return probeRepo.findById(id);
     }
 
+    @Override
+    public Integer nextSequence(Integer id) {
+            return ++id;
+    }
+}
+
     /*@Override
     public Optional<Probe> findByCoordinates(int x, int y) {
         return probeRepo.findByCoordinates(x,y);
     }*/
-}
+

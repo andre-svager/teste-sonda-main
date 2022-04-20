@@ -2,21 +2,46 @@ package br.com.elo7.sonda.candidato.domain.model;
 
 import br.com.elo7.sonda.candidato.domain.ProbeOutOfRangeException;
 
+import java.util.Objects;
+import java.util.Optional;
+
 public class Planet {
-	private int id;
+	private Integer id;
 	private int width;
 	private int height;
+	private String name;
 
-	public Planet(int height, int width) {
+	public Planet(int height, int width, String name) {
 		this.height = height;
 		this.width = width;
+		this.name = name;
 	}
 
 	public Planet(){}
 
+	public Integer getId() {
+		return id;
+	}
+
+	//Sorry for that !! TODO Implement Sequence in MongoDb
+	public Integer nextSequence(){
+		return hashCode();
+	}
+
+	public void setPlanetId(Integer id){
+		this.id = id;
+	}
+
+	//Need in: probe.verifyIfProbeInsideOfPlanet
+	public int getHeight() {
+		return this.height;
+	}
+	public int getWidth() { return this.width; }
+	public String getName() { return this.name; }
+
 	@Override
 	public int hashCode() {
-		return id;
+		return Objects.hash(id, width, height, name);
 	}
 
 	@Override
@@ -26,24 +51,4 @@ public class Planet {
 		}
 		return false;
 	}
-
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getWidth() {
-		return width;
-	}
-	public void setWidth(int width) {
-		this.width = width;
-	}
-	public int getHeight() {
-		return height;
-	}
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
 }

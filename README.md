@@ -26,20 +26,21 @@
   
 
 ### Technical Challenges
- - Design Pattern (evaluate)
  - Clean Code
  - Responsibility segregation (SOLID)
- - Multi Databases Persistence (Onion - Hexagonal)
+ - Multi Databases Persistence Mongo| InMemory (Hexagonal). Necessary change @Principal to activate in interface
  - Open API Documentation
  - Scalability, Availability and Performance
    - Microservices Segregation (Bounded Contexts)
    - Multi Thread or Async Call: WebFlux | Java RX | Vertx (TODO)
+   - Cloud environment configuration, like multi A-Z, autoscaling and so on.
 
 ### Business Challenge
  - Web Contract
     - How get a Set of Probes in an existing Planet ?
-        -> Planets should have an identifier to Report Earth ControlCenter if many Planets will be explored
-        -> Planet should know all Probes in the ground
+        - Planets should have an identifier to Report 
+        - Create a `ControlCenter` if many Planets will be explored
+        - Planet should know all Probes in the ground
     - How to Move arrived Probe ?
       - Probes should have a Identifier
       - We should know previous state (active | inactive) and position of a Probe to move it
@@ -47,7 +48,7 @@
 
  - Limited Surface and set of Probes in movement
      - Probes shall not share same Cartesian Points (ProbeCollisionException)
-        - Obs: Consider Probe size 1x1
+        - Obs: Desconsider Probe
      - Probes should be limited a Planet Size (ProbeOutOfRangeException)
         - Cartesian Points of Probe must be less than Planet Size 
 
@@ -111,9 +112,17 @@ graph TD
 ```
 
 ```bash
-  curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":10,"height":10,"probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
+POST with some Planets. Added planetName attribute to identify an Planet
+  curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":10,"height":10,"planetName":"MARS","probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
+  curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":20,"height":20,"planetName":"MOON","probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
 ```
 
 ```openapi
 OpenApi :
     localhost:8080/swg.html
+
+
+InputDTO -> convertProbes
+  To keep layers segregated, we should convert:
+    application Layers objects -> Domain Objects
+	 

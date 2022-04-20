@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
     @Bean
-    ProbeService probeService(ProbesRepository probesRepository) {
-       return new DomainProbeService(probesRepository);
+    ProbeService probeService(ProbesRepository probesRepository, PlanetsRepository planetsRepository) {
+       return new DomainProbeService(probesRepository, planetsRepository);
     }
 }

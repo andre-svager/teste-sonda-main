@@ -31,11 +31,6 @@ public class Probe {
 		this.planet = planet;
 	}
 
-	//TODO Refactor to remove this dependency from InMemoryDatabase
-	public int getId() { return id; }
-
-	public void setId(int id) {	this.id = id; }
-
 	public char getDirection(){ return this.direction; }
 
 	public int getX() { return this.x; }
@@ -44,6 +39,12 @@ public class Probe {
 
 	public Planet getPlanet(){
 		return this.planet;
+	}
+
+	public int getId(){return this.id; }
+
+	public void setProbeId(int id){
+		this.id = id;
 	}
 
 	public void moveProbeYAxis() {
