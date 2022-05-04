@@ -1,128 +1,108 @@
-## Smart Probe
+## Bem vindo candidato(a)!
 
-- `1` Explore Planets with a Probe
-- `2` Planet area is a Cartesian Plan
-- `3` Data received by system should contain: Planets, Probes and Commands thought REST interface.
+Vamos explicar como funciona o nosso desafio:
 
-### Command Sequence from Earth to a Probe :
-- `M` -> Moving Forward 1 position
-- `L` -> Turn left (90 graus)
-- `R` -> Turn right (90 graus)
+Um desenvolvedor recebeu um tarefa de uma pessoa da equipe de produto. Ele queria poder controlar sondas em outros planetas por meio de comandos. Para explicar o funcionamento do produto, ele escreveu o seguinte funcionamento em um pedaço de papel:
 
+### Explicação da necessidade:
+```
+Tamanho da área do planeta : 5x5
 
-### Examples with BDD
+Posição de pouso da sonda 1: x=1, y=2 face para Norte
+Sequencia de comandos: LMLMLMLMM
+Posição final da sonda: x=1 y=3 face para Norte
 
-> Given a Planet, with Size : 5x5
+Posição de pouso da sonda 2: x=3, y=3 face para Leste
+Sequencia de comandos: MMRMMRMRRML flw
+Posição final da sonda: x=5 y=1 face para Norte
+```
 
-> Scenario 1
-  - When Probe Position: x=1, y=2 North
-  - And Command Sequence: LMLMLMLMM
-  - Then Final Probe Position: x=1 y=3 North
+A sequência de comandos é um conjunto de instruções enviadas da terra para a sonda, onde :
+- `M` -> Andar para a frente na direção que está 1 posição.
+- `L` -> Virar a sonda para a esquerda (90 graus)
+- `R` -> Virar a sonda para a direita (90 graus)
 
-> Scenario2
-  - When Probe Position: x=3, y=3 East (leste)
-  - And Command Sequence: MMRMMRMRRML
-  - Then Final Probe Position: x=5 y=1 North
+A área do planeta é um plano cartesiano com o tamanho informado pelo operador.
+
+A orientação da sonda dentro do plano cartesiano usa uma rosa dos ventos como referência
+
+![rosa dos ventos](http://i.imgur.com/li8Ae5L.png "Rosa dos Ventos")
+
+O sistema deveria receber os dados sobre o planeta, sondas e movimentos por meio de uma interface REST.
+
+## O desafio
+
+Você vai fazer o code review do sistema que foi implementado por um desenvolvedor não muito experiente. O código está funcional e com certa cobertura de testes automatizados mas não necessariamente está seguindo boas práticas. Olhe o código, anote propostas de melhorias ou refatore o código com a suas idéias.
+
+```propostas de melhoria
+Criar uma Estrategia para movimentar a sonda
+Criar uma Maquina de Estado para  
+Proposta 1
+Proposta 2
+
+```
+
+Além de olhar para o código em si, pense a respeito dos seguintes tópicos:
+
+### Sobre o contrato da aplicação web:
+
+- Como eu cadastro mais sondas em um planeta existente?
+ 
+```set of sondas
+ - Para cadastrar mais de uma sonda, precisa de um Agregador
+ - Este Agregador deve ter uma coleçao de sondas
+ - O Agregador deve ter regras especificas para inserir e recuperar as sondas
+```
+
+- Como eu movo uma sonda já pousada?
+```move sondas
+ - Precisa de um identificador
+ - Precisa recuperar a sonda da colecao
+ - Direçao da sonda inexistente: DirectionException: (msg to log: 'WRONG_DIRECTION')
+```
+
+### Sobre modelagem de código:
+
+- Imaginando um planeta com uma superfície limitada e várias sondas em movimento, existem regras de negócio importantes não mapeadas no código?
+```move sondas
+ - Precisa de um identificador
+ - Precisa recuperar a sonda da colecao
+```
+- As responsabilidades estão bem distribuídas no código? Como melhorar?
+```responsability
+ - 
+ - 
+```
+Vamos deixar aqui alguns posts que consideramos boas práticas de desenvolvimento na parte de modelagem O.O. para sua consulta
+
+- https://www.alura.com.br/artigos/nao-aprender-oo-getters-e-setters
+- https://www.alura.com.br/artigos/o-que-e-modelo-anemico-e-por-que-fugir-dele
+
+### Para pretensões senior:
+
+No caso da pretenção estar no patamar de senior nós requisitamos alguns desafios extras:
+
+- O teste possui um mecanismo de persistência em memória, altere para uma persistência utilizando um ou mais banco de dados de forma a armazenar as informações de planetas e sondas e buscá-las ou alterá-las de maneira eficiente;
+- Se preocupe com uma maneira de documentar a api do sistema web;
+- Tenha em mente escalabilidade, disponibilidade e performance em sua solução. Apesar do problema proposto ser bem didático procure tratar a solução como um sistema de produção real.
+
+Obs: Se você está em dúvida se a sua pretenção é senior ou não procure nossa tech recruiter sobre o assunto, ela saberá responder. Caso sua pretenção seja junior ou pleno você pode encarar os pontos acima como opcionais para demonstrar seu conhecimento e potencializar o valor inicial de nossa oferta, mas se a sua pretenção é junior ou pleno os pontos acima NÃO SÃO OBRIGATÓRIOS para a entrega da solução.
+
+## Informações sobre o projeto
   
+### Como subir o projeto
 
-### Technical Challenges
- - Clean Code
- - Responsibility segregation (SOLID)
- - Hexagonal architecture (layers segregation)
- - Multi Databases Persistence (Mongo| InMemory). Switch @Principal between repository interfaces
- - Open API Documentation
- - Scalability, Availability and Performance
-   - Microservices Segregation (Bounded Contexts) (TODO)
-   - Multi Thread or Async Call: WebFlux | Java RX | Vertx (TODO)
-   - Cloud environment configuration, like multi A-Z, autoscaling and so on.
+- Certifique-se que a porta 8080 esteja desocupada;
+- Certifique-se de que você possui o maven instalado localmente;
+- Certifique-se de que você está na raiz do projeto;
+- Rode o `./mvnw spring-boot:run`
 
-### Business Challenge
- - Web Contract
-    - How get a Set of Probes in an existing Planet ?
-        - Create a Controller to list all Planets (PlanetController)
-        - Planets should have an identifier and search mechanism (planetName) (findByName) 
-        - Create a `ControlCenter` if many Planets will be explored (TODO)
-        - Planet should know all Probes in the ground (TODO)
-    - How to Move arrived Probe ?
-      - Probes should have a Identifier(TODO)
-      - We should know previous state (active | inactive) and position of a Probe to move it(TODO)
-      - With a previous position, we can move a Probe just given it new coordinates 
+Com isso as dependências serão baixadas e a API subirá na porta `8080`;
 
- - Limited Surface and set of Probes in movement
-     - Probes shall not share same Cartesian Points (ProbeCollisionException)
-        - Obs: Disregard Probe
-     - Probes should be limited a Planet Size (ProbeOutOfRangeException)
-        - Cartesian Points of Probe must be less than Planet Size 
+### Fazendo uma requisição
 
-
-### Solution
-
-  - `1` Run: docker-compose up in infra directory : teste-sonda-main > infra
-  - `2` Add Lombok to a Project to omit getters and setters (Not Necessary)
-  - `3` Add Mongo Spring Data to a project dependency (Maven)
-  - `4` Create Layers to Segregate Persistence Types and Domain Objects
-    - Higher level must never depend on a lower one. 
-      - https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
-  - `5` Previous DDD references:
-      - https://www.alura.com.br/artigos/nao-aprender-oo-getters-e-setters
-      - https://www.alura.com.br/artigos/o-que-e-modelo-anemico-e-por-que-fugir-dele
-
-```openapi
-localhost:8080/swg.html  -> customized open api documentation
-```
-
-```run
-TO run Project: ./mvnw spring-boot:run`
-```
-
-```mermaid
-%%{init: {'theme': 'dark' } }%%
-graph TD
-    subgraph Application Layer
-    A[ProbeContoller]
-    IDTO[InputDTO]
-    PDTO[ProbeDTO]
-    end
-    subgraph Domain Layer
-    PS(ProbeService)
-    subgraph _
-        DPS(DomainProbeService)
-        P(Probe)
-        PLN(Planet)
-    end
-    PR(ProbeRepository)
-    PL(PlanetRepository)
-    end
-    subgraph Infrastructure Layer
-    MDB(MongoDBProbeRepository)
-    MDC(MongoDBConfiguration)
-    CB(CassandraProbeRepository)
-    CC(CassandraConfiguration)
-    BC(BeanConfiguration)
-    end
-    
-    DPS --> PS
-    A --> PS
-    DPS --> P
-    P --> DPS
-    DPS --> PLN
-    PLN --> DPS
-    DPS --> PR
-    MDB --> PR
-    CB --> PR
-    MDB --> PL
-    CB --> PL
-    IDTO --> A
-    PDTO --> A
-```
+- Aqui você pode usar o Postman, por exemplo, ou o curl como abaixo:
 
 ```bash
-POST with coordinates. Added planetName attribute to identify an Planet
-  curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":10,"height":10,"planetName":"MARS","probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
-  curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":20,"height":20,"planetName":"MOON","probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
+curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":10,"height":10,"probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
 ```
-
-````
-InputDTO -> convertProbes
-  To keep layers segregated, we should convert:
-    application Layers objects -> Domain Objects in own app layer object
