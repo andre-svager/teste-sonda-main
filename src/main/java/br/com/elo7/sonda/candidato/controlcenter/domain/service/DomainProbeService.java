@@ -4,7 +4,7 @@ import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.Pla
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.ProbesRepository;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
-import br.com.elo7.sonda.candidato.controlcenter.domain.exceptions.PlanetNotFoundException;
+import br.com.elo7.sonda.candidato.controlcenter.domain.PlanetNotFoundException;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;

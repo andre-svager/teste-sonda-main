@@ -1,17 +1,14 @@
 package br.com.elo7.sonda.candidato.service;
 
-import static com.mongodb.assertions.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import br.com.elo7.sonda.candidato.controlcenter.domain.exceptions.ProbeOutOfRangeException;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
+import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
+import br.com.elo7.sonda.candidato.controlcenter.domain.ProbeOutOfRangeException;
 import br.com.elo7.sonda.candidato.controlcenter.domain.service.ProbeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
+import static com.mongodb.assertions.Assertions.assertTrue;
 
 @SpringBootTest
 public class ProbeServiceTest {

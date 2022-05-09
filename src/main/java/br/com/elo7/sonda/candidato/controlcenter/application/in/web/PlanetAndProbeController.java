@@ -1,7 +1,5 @@
 package br.com.elo7.sonda.candidato.controlcenter.application.in.web;
 
-import java.util.List;
-
 import br.com.elo7.sonda.candidato.controlcenter.application.out.web.ProbeResponse;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import br.com.elo7.sonda.candidato.controlcenter.domain.service.ProbeService;
@@ -11,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/planet-with-probes")

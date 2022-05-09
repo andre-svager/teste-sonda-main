@@ -1,9 +1,9 @@
 package br.com.elo7.sonda.candidato.controlcenter.domain;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.exceptions.CoordinateException;
-
 public class Axis {
     private Integer value;
+
+    public static Integer ZERO = 0;
 
     public Axis(Integer value) throws CoordinateException {
         if(! isPositive(value) ){  throw new CoordinateException("axis: "+ value); }

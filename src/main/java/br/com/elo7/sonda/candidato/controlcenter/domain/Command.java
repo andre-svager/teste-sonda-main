@@ -1,7 +1,5 @@
 package br.com.elo7.sonda.candidato.controlcenter.domain;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.exceptions.CommandException;
-
 import java.util.stream.Stream;
 
 public enum Command {

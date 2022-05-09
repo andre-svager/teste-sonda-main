@@ -32,11 +32,14 @@ O sistema deveria receber os dados sobre o planeta, sondas e movimentos por meio
 
 ## O desafio
 
-Você vai fazer o code review do sistema que foi implementado por um desenvolvedor não muito experiente. O código está funcional e com certa cobertura de testes automatizados mas não necessariamente está seguindo boas práticas. Olhe o código, anote propostas de melhorias ou refatore o código com a suas idéias.
+Você vai fazer o code review do sistema que foi implementado por um desenvolvedor não muito experiente. 
+O código está funcional e com certa cobertura de testes automatizados mas não necessariamente está seguindo
+boas práticas. Olhe o código, anote propostas de melhorias ou refatore o código com a suas idéias.
 
+#### Observaçoes sobre o desafio
 ```propostas de melhoria
 Criar uma Estrategia para movimentar a sonda
-Criar uma Maquina de Estado para  
+Criar uma Maquina de Estado para direcionar segundo comandos informados 
 Proposta 1
 Proposta 2
 
@@ -48,6 +51,7 @@ Além de olhar para o código em si, pense a respeito dos seguintes tópicos:
 
 - Como eu cadastro mais sondas em um planeta existente?
  
+#### Observacoes sobre o contrato web
 ```set of sondas
  - Para cadastrar mais de uma sonda, precisa de um Agregador
  - Este Agregador deve ter uma coleçao de sondas
@@ -55,8 +59,11 @@ Além de olhar para o código em si, pense a respeito dos seguintes tópicos:
 ```
 
 - Como eu movo uma sonda já pousada?
+
+#### Observacoes sobre movimentacao da Sonda
 ```move sondas
- - Precisa de um identificador
+ - Movimentacao (MOVEMENT) eh uma acao importante no nosso dominio 
+ Precisa de um identificador
  - Precisa recuperar a sonda da colecao
  - Direçao da sonda inexistente: DirectionException: (msg to log: 'WRONG_DIRECTION')
 ```
@@ -64,15 +71,26 @@ Além de olhar para o código em si, pense a respeito dos seguintes tópicos:
 ### Sobre modelagem de código:
 
 - Imaginando um planeta com uma superfície limitada e várias sondas em movimento, existem regras de negócio importantes não mapeadas no código?
+
+#### Observacoes sobre multiplicidade de Sondas
 ```move sondas
  - Precisa de um identificador
  - Precisa recuperar a sonda da colecao
 ```
 - As responsabilidades estão bem distribuídas no código? Como melhorar?
-```responsability
- - 
- - 
+
+#### Observacoes sobre Responsabilidades da Aplicaçao
+
+``` important notes
+Considerei DIRECTION como um DOMINIO separado, imaginando uma utilizacao futura. Explicando melhor:
+    - Imagine que nos planetas, ao inves de termos somente sondas, 
+      tenhamos tambem algo como .. robos. 
+      Os robos podem obedecer aos mesmos comandos das sondas, mas sao totalmente diferentes.
+      Ou drones, ou um astronauta .. qualquer coisa que precise se mover .... 
 ```
+
+
+
 Vamos deixar aqui alguns posts que consideramos boas práticas de desenvolvimento na parte de modelagem O.O. para sua consulta
 
 - https://www.alura.com.br/artigos/nao-aprender-oo-getters-e-setters

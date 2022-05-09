@@ -1,7 +1,5 @@
 package br.com.elo7.sonda.candidato.controlcenter.domain;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.exceptions.CoordinateException;
-
 /** X and Y axis should be segregated ?? */
 public class Coordinate {
     private Axis x;

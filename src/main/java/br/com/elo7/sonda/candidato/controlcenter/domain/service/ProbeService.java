@@ -1,11 +1,10 @@
 package br.com.elo7.sonda.candidato.controlcenter.domain.service;
 
-import java.util.List;
-
-import br.com.elo7.sonda.candidato.controlcenter.application.out.web.PlanetResponse;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
+
+import java.util.List;
 
 
 public interface ProbeService {

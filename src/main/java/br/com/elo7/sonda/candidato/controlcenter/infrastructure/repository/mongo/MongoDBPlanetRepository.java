@@ -1,7 +1,7 @@
 package br.com.elo7.sonda.candidato.controlcenter.infrastructure.repository.mongo;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.PlanetsRepository;
+import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;

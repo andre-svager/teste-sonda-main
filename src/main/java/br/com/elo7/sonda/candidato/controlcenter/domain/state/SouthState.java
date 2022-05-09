@@ -1,9 +1,10 @@
-package br.com.elo7.sonda.candidato.direction.domain;
+package br.com.elo7.sonda.candidato.controlcenter.domain.state;
 
 import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
-import br.com.elo7.sonda.candidato.controlcenter.domain.exceptions.CoordinateException;
+import br.com.elo7.sonda.candidato.controlcenter.domain.CoordinateException;
+import br.com.elo7.sonda.candidato.controlcenter.domain.Direction;
 
-public class South implements DirectionState {
+public class SouthState implements DirectionState {
 
 	@Override
 	public Coordinate move(Coordinate coordinates) throws CoordinateException {
@@ -17,12 +18,12 @@ public class South implements DirectionState {
 
 	@Override
 	public DirectionState left() {
-		return new East();
+		return new EastState();
 	}
 
 	@Override
 	public DirectionState right() {
-		return new West();
+		return new WestState();
 	}
 	
 }

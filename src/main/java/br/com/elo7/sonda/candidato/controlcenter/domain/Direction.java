@@ -1,6 +1,4 @@
-package br.com.elo7.sonda.candidato.direction.domain;
-
-import br.com.elo7.sonda.candidato.controlcenter.domain.exceptions.DirectionException;
+package br.com.elo7.sonda.candidato.controlcenter.domain;
 
 import java.util.stream.Stream;
 

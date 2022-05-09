@@ -1,7 +1,7 @@
 package br.com.elo7.sonda.candidato.controlcenter.infrastructure.repository.mongo;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.ProbesRepository;
+import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 

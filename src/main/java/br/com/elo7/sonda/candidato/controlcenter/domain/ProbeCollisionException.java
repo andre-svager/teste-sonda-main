@@ -1,4 +1,4 @@
-package br.com.elo7.sonda.candidato.controlcenter.domain.exceptions;
+package br.com.elo7.sonda.candidato.controlcenter.domain;
 
 public class ProbeCollisionException extends RuntimeException{
     @Override

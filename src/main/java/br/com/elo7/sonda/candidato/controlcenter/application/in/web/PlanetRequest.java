@@ -1,7 +1,7 @@
 package br.com.elo7.sonda.candidato.controlcenter.application.in.web;
 
 import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
-import br.com.elo7.sonda.candidato.controlcenter.domain.exceptions.CoordinateException;
+import br.com.elo7.sonda.candidato.controlcenter.domain.CoordinateException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PlanetRequest {

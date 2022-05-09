@@ -1,10 +1,10 @@
 package br.com.elo7.sonda.candidato.controlcenter.application.out.persistence;
 
-import java.util.List;
-import java.util.Optional;
-
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import org.springframework.data.domain.Sort;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface PlanetsRepository {
 
