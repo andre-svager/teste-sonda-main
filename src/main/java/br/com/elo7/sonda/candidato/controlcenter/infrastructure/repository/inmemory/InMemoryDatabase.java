@@ -2,6 +2,7 @@ package br.com.elo7.sonda.candidato.controlcenter.infrastructure.repository.inme
 
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.PlanetsRepository;
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.ProbesRepository;
+import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 import com.google.common.collect.Lists;
@@ -23,24 +24,23 @@ class InMemoryDatabase {
 	@Repository
 	public class PlanetDAO implements PlanetsRepository {
 		public Planet save(Planet planet) {
-			planet.setPlanetId(planet.nextSequence());
 			probesPerPlanet.put(planet, Lists.newArrayList());
 			return planet;
 		}
 
-		public Optional<Planet> findById(int id) {
-			return probesPerPlanet.keySet()
-					.stream()
-					.filter(planet -> planet.getId() == id)
-					.findFirst();
+		@Override
+		public Planet save(Coordinate coordinates) {
+			Planet saved = new Planet(coordinates);
+			probesPerPlanet.put(saved, Lists.newArrayList());
+			return saved;
 		}
 
 		@Override
-		public Planet findByName(String name) {
+		public Optional<Planet> findById(Integer id) {
 			return probesPerPlanet.keySet()
 								  .stream()
-								  .filter(planet -> name.equals(planet.getName()))
-								  .findFirst().get();
+								  .filter(planet -> planet.getPlanetIdentifier() == id)
+								  .findFirst();
 		}
 
 		@Override
@@ -53,13 +53,9 @@ class InMemoryDatabase {
 	public class ProbeDAO implements ProbesRepository {
 		@Override
 		public void save(Probe probe) {
-			List<Probe> probes = probesPerPlanet.get(probe.getPlanet());
-			probe.setProbeId(nextSequence(probe.getId()));
+			List<Probe> probes = probesPerPlanet.get( probe.getPlanetIdentifier() );
+			//probe.setProbeId(nextSequence(probe.getId()));
 			probes.add(probe);
-		}
-
-		private int generateProbeId(Probe probe, int size) {
-			return 7*(size+1)+11*probe.getPlanet().getId();
 		}
 
 		@Override
@@ -67,13 +63,13 @@ class InMemoryDatabase {
 			return probesPerPlanet.entrySet().stream().flatMap(
 						entry -> entry.getValue()
 										.stream()
-										.filter(probe -> probe.getId() == id)
+										.filter(probe -> probe.getProbeIdentifier() == id)
 					).findFirst();
 		}
 
 		@Override
 		public Integer nextSequence(Integer id) {
-			return id ++;
+			return null;
 		}
 
 	}

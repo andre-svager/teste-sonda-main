@@ -1,19 +1,18 @@
 package br.com.elo7.sonda.candidato.controlcenter.application.in.web;
 
 import br.com.elo7.sonda.candidato.controlcenter.application.out.web.PlanetResponse;
-import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
-import br.com.elo7.sonda.candidato.controlcenter.domain.CoordinateException;
+import br.com.elo7.sonda.candidato.controlcenter.application.out.web.ProbeResponse;
+import br.com.elo7.sonda.candidato.controlcenter.domain.*;
 import br.com.elo7.sonda.candidato.controlcenter.domain.service.ControlCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
+import java.util.List;
 
 @RestController
+@RequestMapping("/planet-with-probes")
 public class ControlCenterResource {
 
 	@Autowired
@@ -21,45 +20,41 @@ public class ControlCenterResource {
 
 	@RequestMapping(value = "/planet", method = RequestMethod.POST)
 	@ResponseBody
-	ResponseEntity<PlanetResponse> createPlanet(@RequestBody PlanetRequest input) {
+	public ResponseEntity<PlanetResponse> createPlanet(@RequestBody PlanetRequest request) {
 		try {
 			return new ResponseEntity<PlanetResponse>(
-							new PlanetResponse( service.generateAPlanet( input.toCoordinates())), HttpStatus.CREATED);
+					new PlanetResponse( service.generateAPlanet( request.toCoordinates() ) ), HttpStatus.CREATED);
 		} catch (CoordinateException e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "", e);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}
 	}
 
-	@RequestMapping(value = "/explorer", method = RequestMethod.POST)
-	@ResponseBody
-	ResponseEntity<ExplorerRO> createExplorer(@RequestBody ExplorerRO input) {
-		final URI location = ServletUriComponentsBuilder.fromCurrentServletMapping().path("/explorer/{id}").build().expand(explorer.getId()).toUri();
-		Explorer explorer = service.createExplorer( input.getPlateauId(), new Coordinate(input.getLat(), input.getLng()), input.getDirection());
-		return ResponseEntity.created(location).body(Converter.convert(explorer, ExplorerRO.class));
+	@PostMapping
+	public ResponseEntity<List<ProbeResponse>> createProbe(@RequestBody ProbeRequest request) {
+		try {
+			return ResponseEntity.ok(ProbeResponse.convertTo(
+					service.registerAProbeInAPlanet(request.getPlanetId(),
+													request.getX(),
+													request.getY(),
+													request.getDirection(),
+													request.getCommands())));
+		}catch (PlanetNotFoundException e){
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
 	}
 
-	@RequestMapping(value = "/explorer/{id}/move", method = RequestMethod.PUT)
+	@PatchMapping(value = "/probe/{id}/move/{commands}")
 	@ResponseBody
-	ResponseEntity<Void> move(@PathVariable int id, @RequestBody String command)
-			throws Exception {
-		Explorer explorer = service.findExplorer(id);
-		service.move(explorer, command);
+	ResponseEntity<Void> move( @PathVariable int id,
+							   @RequestBody String commands) throws Exception {
+		//ProbeResponse explorer = service.findExplorer(id);
+		//service.move(explorer, command);
 		return ResponseEntity.noContent().build();
-	}
-
-	@RequestMapping(value = "/explorer/{id}", method = RequestMethod.GET)
-	@ResponseBody
-	ResponseEntity<ExplorerRO> getExplorer(@PathVariable int id) {
-		Explorer explorer = service.findExplorer(id);
-		return ResponseEntity.ok(Converter.convert(explorer, ExplorerRO.class));
 	}
 
 	@RequestMapping(value = "/plateau/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	ResponseEntity<PlanetRequest> getPlateau(@PathVariable int id) {
-		Plateau plateau = service.findPlateau(id);
-		return ResponseEntity.ok(Converter.convert(plateau, PlanetRequest.class));
+	ResponseEntity<PlanetResponse> getPlanet(@PathVariable int id) {
+		return ResponseEntity.ok(PlanetResponse.convertTo(service.findPlanet(id)));
 	}
-
 }
-

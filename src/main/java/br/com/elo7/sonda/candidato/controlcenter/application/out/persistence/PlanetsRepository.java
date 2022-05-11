@@ -11,9 +11,7 @@ public interface PlanetsRepository {
 
 	Planet save(Coordinate coordinates);
 
-	Optional<Planet> findById(int id);
-
-	Planet findByName(String name);
+	Optional<Planet> findById(Integer id);
 
 	List<Planet> findAll(Sort sort);
 }

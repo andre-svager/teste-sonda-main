@@ -38,10 +38,11 @@ boas práticas. Olhe o código, anote propostas de melhorias ou refatore o códi
 
 #### Observaçoes sobre o desafio
 ```propostas de melhoria
-Criar uma Estrategia para movimentar a sonda
-Criar uma Maquina de Estado para direcionar segundo comandos informados 
-Proposta 1
-Proposta 2
+- Criar estruturas Enumeradas para representar:
+    - Direçoes: enum Direction
+    - Comandos : enum Command
+- Utilizar uma ESTRATEGIA para MOVIMENTAR a sonda : MovementStrategy 
+- Criar uma Maquina de ESTADO para DIRECIONAR a sonda: DirectionState 
 
 ```
 
@@ -53,8 +54,8 @@ Além de olhar para o código em si, pense a respeito dos seguintes tópicos:
  
 #### Observacoes sobre o contrato web
 ```set of sondas
- - Para cadastrar mais de uma sonda, precisa de um Agregador
- - Este Agregador deve ter uma coleçao de sondas
+ - Para cadastrar multiplas sonda, precisa coloca-las em um conjunto e este em um agregador. 
+    - Utilizado o Proprio Planeta como agregador.
  - O Agregador deve ter regras especificas para inserir e recuperar as sondas
 ```
 

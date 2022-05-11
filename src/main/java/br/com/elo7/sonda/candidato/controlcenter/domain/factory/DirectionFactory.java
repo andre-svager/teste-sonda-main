@@ -2,7 +2,6 @@ package br.com.elo7.sonda.candidato.controlcenter.domain.factory;
 
 import br.com.elo7.sonda.candidato.controlcenter.domain.Direction;
 import br.com.elo7.sonda.candidato.controlcenter.domain.DirectionException;
-import br.com.elo7.sonda.candidato.controlcenter.domain.direction.state.*;
 import br.com.elo7.sonda.candidato.controlcenter.domain.state.*;
 
 public class DirectionFactory {

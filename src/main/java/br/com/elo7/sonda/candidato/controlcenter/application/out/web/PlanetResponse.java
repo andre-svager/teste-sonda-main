@@ -6,9 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class PlanetResponse {
 
     @JsonProperty
-    private String identifier;
+    private Integer identifier;
 
     public PlanetResponse(Planet planet) {
         this.identifier = planet.getPlanetIdentifier();
+    }
+
+    public static PlanetResponse convertTo(Planet planet) {
+        return new PlanetResponse(planet);
     }
 }

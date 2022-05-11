@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PlanetRequest {
     @JsonProperty
-    private int id;
-    @JsonProperty
     private int x;
     @JsonProperty
     private int y;

@@ -1,25 +1,46 @@
 package br.com.elo7.sonda.candidato.controlcenter.domain;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class Planet {
 
-	private UUID id;
+	private Integer id;
 	private Coordinate extension;
+	private List<Probe> probes;
 
 	public Planet(Coordinate coordinates) {
 		this.extension = coordinates;
 		this.id = generateSequence();
 	}
-	private UUID generateSequence() {
-		return UUID.randomUUID();
+
+	public Planet(Coordinate coordinates, Integer identifier) {
+		this.extension = coordinates;
+		Optional.ofNullable(identifier).orElse(generateSequence());
 	}
-	public String getPlanetIdentifier() {
-		return "planet<$id>";
+
+	private Integer generateSequence() {
+		return this.id = hashCode();
 	}
-	public boolean isOutOfPlanetLongitude(int xAxis) { return xAxis > extension.x().value();}
-	public boolean isOutOfPlanetLatitude(int yAxis) {
-		return yAxis > extension.y().value();
+
+	public Integer getPlanetIdentifier() { return id; }
+
+	public Coordinate getPlanetCoordinates(){
+		return extension;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Planet planet = (Planet) o;
+		return id.equals(planet.id) && extension.equals(planet.extension);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, extension);
 	}
 }
 

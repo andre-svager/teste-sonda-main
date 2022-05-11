@@ -1,6 +1,7 @@
 package br.com.elo7.sonda.candidato.controlcenter.infrastructure.repository.mongo;
 
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.PlanetsRepository;
+import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Sort;
@@ -19,20 +20,20 @@ public class MongoDBPlanetRepository implements PlanetsRepository {
         this.planetRepository = planetRepository;
     }
 
-    @Override
+
     public Planet save(Planet planet) {
         planetRepository.save(planet);
         return planet;
     }
 
     @Override
-    public Optional<Planet> findById(int id) {
-        return Optional.empty();
+    public Planet save(Coordinate coordinates) {
+        return null;
     }
 
     @Override
-    public Planet findByName(String name) {
-        return planetRepository.findByName(name);
+    public Optional<Planet> findById(Integer id) {
+        return Optional.empty();
     }
 
     @Override

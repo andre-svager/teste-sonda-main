@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ControlCenterService {
 
-	public List<Probe> landProbes(Planet planet, List<Probe> probes);
-
-	public Planet getPlanet(String name);
-
     public Planet generateAPlanet(Coordinate toCoordinates);
+
+	List<Probe> registerAProbeInAPlanet(Integer planetId, int x, int y, char direction, String commands);
+
+	Planet findPlanet(int id);
 }

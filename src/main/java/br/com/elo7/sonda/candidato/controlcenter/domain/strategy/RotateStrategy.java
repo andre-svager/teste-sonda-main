@@ -19,8 +19,8 @@ public class RotateStrategy implements MovementStrategy {
 	@Override
 	public void move() throws DirectionException {
 		switch (Command.valueOf(command)){
-			case RIGHT -> probe.changeDirection(probe.getDirection().right());
-			case LEFT ->probe.changeDirection(probe.getDirection().left());
+		//	case RIGHT -> probe.changeDirection(probe.getDirection().right());
+		//	case LEFT ->probe.changeDirection(probe.getDirection().left());
 			default -> throw new DirectionException("Invalid command");
 		}
 	}
