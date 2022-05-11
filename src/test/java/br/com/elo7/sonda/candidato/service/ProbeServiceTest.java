@@ -3,7 +3,7 @@ package br.com.elo7.sonda.candidato.service;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 import br.com.elo7.sonda.candidato.controlcenter.domain.ProbeOutOfRangeException;
-import br.com.elo7.sonda.candidato.controlcenter.domain.service.ProbeService;
+import br.com.elo7.sonda.candidato.controlcenter.domain.service.ControlCenterService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +14,7 @@ import static com.mongodb.assertions.Assertions.assertTrue;
 public class ProbeServiceTest {
 	
 	@Autowired
-	private ProbeService subject;
+	private ControlCenterService subject;
 	
 	@Test
 	public void should_change_probe_direction_from_N_To_W_when_receive_the_command_L() {

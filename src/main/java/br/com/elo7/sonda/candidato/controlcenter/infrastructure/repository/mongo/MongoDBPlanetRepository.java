@@ -20,8 +20,9 @@ public class MongoDBPlanetRepository implements PlanetsRepository {
     }
 
     @Override
-    public void save(Planet planet) {
+    public Planet save(Planet planet) {
         planetRepository.save(planet);
+        return planet;
     }
 
     @Override

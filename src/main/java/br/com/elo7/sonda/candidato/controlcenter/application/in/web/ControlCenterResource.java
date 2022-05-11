@@ -1,9 +1,9 @@
 package br.com.elo7.sonda.candidato.controlcenter.application.in.web;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.Planet.*;
+import br.com.elo7.sonda.candidato.controlcenter.application.out.web.PlanetResponse;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
 import br.com.elo7.sonda.candidato.controlcenter.domain.CoordinateException;
-import br.com.elo7.sonda.candidato.controlcenter.domain.service.ProbeService;
+import br.com.elo7.sonda.candidato.controlcenter.domain.service.ControlCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +17,14 @@ import java.net.URI;
 public class ControlCenterResource {
 
 	@Autowired
-	private ProbeService service;
+	private ControlCenterService service;
 
 	@RequestMapping(value = "/planet", method = RequestMethod.POST)
 	@ResponseBody
 	ResponseEntity<PlanetResponse> createPlanet(@RequestBody PlanetRequest input) {
 		try {
 			return new ResponseEntity<PlanetResponse>(
-							new PlanetResponse( service.load( input.toCoordinates())), HttpStatus.CREATED);
+							new PlanetResponse( service.generateAPlanet( input.toCoordinates())), HttpStatus.CREATED);
 		} catch (CoordinateException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "", e);
 		}
@@ -33,8 +33,8 @@ public class ControlCenterResource {
 	@RequestMapping(value = "/explorer", method = RequestMethod.POST)
 	@ResponseBody
 	ResponseEntity<ExplorerRO> createExplorer(@RequestBody ExplorerRO input) {
-		Explorer explorer = service.createExplorer( input.getPlateauId(), new Coordinate(input.getLat(), input.getLng()), input.getDirection());
 		final URI location = ServletUriComponentsBuilder.fromCurrentServletMapping().path("/explorer/{id}").build().expand(explorer.getId()).toUri();
+		Explorer explorer = service.createExplorer( input.getPlateauId(), new Coordinate(input.getLat(), input.getLng()), input.getDirection());
 		return ResponseEntity.created(location).body(Converter.convert(explorer, ExplorerRO.class));
 	}
 

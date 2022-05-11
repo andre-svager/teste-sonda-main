@@ -22,9 +22,10 @@ class InMemoryDatabase {
 	
 	@Repository
 	public class PlanetDAO implements PlanetsRepository {
-		public void save(Planet planet) {
+		public Planet save(Planet planet) {
 			planet.setPlanetId(planet.nextSequence());
 			probesPerPlanet.put(planet, Lists.newArrayList());
+			return planet;
 		}
 
 		public Optional<Planet> findById(int id) {

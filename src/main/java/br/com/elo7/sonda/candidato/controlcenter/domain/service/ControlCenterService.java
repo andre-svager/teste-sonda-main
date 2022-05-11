@@ -7,11 +7,11 @@ import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 import java.util.List;
 
 
-public interface ProbeService {
+public interface ControlCenterService {
 
 	public List<Probe> landProbes(Planet planet, List<Probe> probes);
 
 	public Planet getPlanet(String name);
 
-    public Planet load(Coordinate toCoordinates);
+    public Planet generateAPlanet(Coordinate toCoordinates);
 }

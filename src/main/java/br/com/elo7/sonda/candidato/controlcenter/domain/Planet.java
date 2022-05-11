@@ -1,26 +1,25 @@
 package br.com.elo7.sonda.candidato.controlcenter.domain;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.state.DirectionState;
+import java.util.UUID;
 
 public class Planet {
 
-	private int id;
+	private UUID id;
 	private Coordinate extension;
-	private DirectionState direction;
 
-
-	protected Planet() {}
-
-	public Planet(Coordinate coordinates, DirectionState direction) throws DirectionException {
+	public Planet(Coordinate coordinates) {
 		this.extension = coordinates;
-		this.direction = direction;
+		this.id = generateSequence();
 	}
-
-	public DirectionState changeDirection(DirectionState state){
-		return this.direction = state;
+	private UUID generateSequence() {
+		return UUID.randomUUID();
 	}
-
-	public DirectionState getDirection(){
-		return this.direction;
+	public String getPlanetIdentifier() {
+		return "planet<$id>";
+	}
+	public boolean isOutOfPlanetLongitude(int xAxis) { return xAxis > extension.x().value();}
+	public boolean isOutOfPlanetLatitude(int yAxis) {
+		return yAxis > extension.y().value();
 	}
 }
+

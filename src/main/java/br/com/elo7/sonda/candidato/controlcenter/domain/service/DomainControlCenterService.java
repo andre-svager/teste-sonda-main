@@ -2,6 +2,7 @@ package br.com.elo7.sonda.candidato.controlcenter.domain.service;
 
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.PlanetsRepository;
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.ProbesRepository;
+import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 import br.com.elo7.sonda.candidato.controlcenter.domain.PlanetNotFoundException;
@@ -10,21 +11,24 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DomainProbeService implements ProbeService{
+public class DomainControlCenterService implements ControlCenterService {
 
     private final ProbesRepository probeRepository;
     private final PlanetsRepository planetRepository;
 
-    public DomainProbeService(ProbesRepository probeRepository, PlanetsRepository planetsRepository) {
+    public DomainControlCenterService(ProbesRepository probeRepository, PlanetsRepository planetsRepository) {
         this.probeRepository = probeRepository;
         this.planetRepository = planetsRepository;
+    }
+    @Override
+    public Planet generateAPlanet(Coordinate toCoordinates) {
+        return planetRepository.save(toCoordinates);
     }
 
     @Override
     public List<Probe> landProbes(Planet planet, List<Probe> probes) {
-        planet.setPlanetId(planet.nextSequence());
-        planetRepository.save(planet);
-
+        planet.isOutOfPlanetLatitude(10);
+        planet.isOutOfPlanetLongitude(10);
         List<Probe> convertedProbes = moveProbes(probes);
         convertedProbes.forEach(probe -> {  probe.setProbeId(probeRepository.nextSequence(probe.getId()));
                                             probeRepository.save(probe);});
@@ -36,6 +40,8 @@ public class DomainProbeService implements ProbeService{
         return planetRepository
                 .findByName(name);
     }
+
+
 
     public Planet getPlanet(Integer id) {
         return planetRepository.findById(id).orElseThrow(PlanetNotFoundException::new);
