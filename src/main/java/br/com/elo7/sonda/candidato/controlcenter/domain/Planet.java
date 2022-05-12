@@ -3,6 +3,7 @@ package br.com.elo7.sonda.candidato.controlcenter.domain;
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.PlanetsRepository;
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.ProbesRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,6 +24,9 @@ public class Planet {
 	}
 	public Probe generateAProbe( Integer x, Integer y,
 								 char direction) throws DirectionException, ProbeOutOfRangeException {
+
+		//probes.computeIfAbsent(account.getId() , ArrayList::new ).add(account.getBalance());
+
 		return new Probe(this, new Coordinate(x,y),String.valueOf(direction));
 	}
 
