@@ -18,8 +18,9 @@ public class MongoDBProbeRepository implements ProbesRepository {
     }
 
     @Override
-    public void save(Probe probe) {
+    public Probe save(Probe probe) {
         probeRepo.save(probe);
+        return probe;
     }
 
     @Override

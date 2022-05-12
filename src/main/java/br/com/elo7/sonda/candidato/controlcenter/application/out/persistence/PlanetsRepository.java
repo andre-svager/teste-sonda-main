@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface PlanetsRepository {
 
-	Planet save(Coordinate coordinates);
+	Planet save(Planet planet);
 
 	Optional<Planet> findById(Integer id);
 

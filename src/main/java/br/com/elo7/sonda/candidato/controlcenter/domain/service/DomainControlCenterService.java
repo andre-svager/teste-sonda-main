@@ -23,19 +23,24 @@ public class DomainControlCenterService implements ControlCenterService {
 
     @Override
     public Planet generateAPlanet(Coordinate toCoordinates) {
-        return planetRepository.save(toCoordinates);
+        return new Planet(toCoordinates).save(planetRepository);
     }
 
     @Override
-    public List<Probe> registerAProbeInAPlanet(Integer planetId, int x, int y, char direction, String commands) {
-        Planet planetToBeRecovered;
-
-        Optional.ofNullable( planetToBeRecovered = findPlanet( planetId) )
+    public List<Probe> registerAProbeInAPlanet( Integer planetId, int x, int y,
+                                                char direction, String commands) throws DirectionException,
+                                                                                        PlanetNotFoundException {
+        Optional.ofNullable( findPlanet(planetId)
+                                .generateAProbe( x, y, direction)
+                                .move(commands)
+                                .save(probeRepository) )
                 .orElseThrow(PlanetNotFoundException::new);
 
-        //planetToBeRecovered.
+        return findAllProbesInAPlanet(planetId);
+    }
 
-        return new ArrayList<Probe>();
+    private List<Probe> findAllProbesInAPlanet(Integer planetId) {
+        return probeRepository.findAllProbesPlanet(planetId);
     }
 
     @Override
@@ -56,10 +61,6 @@ public class DomainControlCenterService implements ControlCenterService {
 
     public List<Planet> getAllPlanets() {
         return planetRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
-    }
-
-    private List<Probe> moveProbes(List<Probe> probes){
-        return null;//probes.stream().map(probe -> probe.moveProbeWithAllCommands()).collect(Collectors.toList());
     }
 
     public void verifyIfThereIsAProbeInSamePosition(int x, int y){

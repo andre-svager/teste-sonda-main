@@ -52,7 +52,7 @@ public class ControlCenterResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@RequestMapping(value = "/plateau/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/planet/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	ResponseEntity<PlanetResponse> getPlanet(@PathVariable int id) {
 		return ResponseEntity.ok(PlanetResponse.convertTo(service.findPlanet(id)));

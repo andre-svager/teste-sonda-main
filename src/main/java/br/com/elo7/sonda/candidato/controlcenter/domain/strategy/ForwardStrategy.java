@@ -1,22 +1,22 @@
 package br.com.elo7.sonda.candidato.controlcenter.domain.strategy;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
-import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
-import com.elo7.marte.domain.Explorer;
-import com.elo7.marte.domain.vo.Coordinate;
-
+import br.com.elo7.sonda.candidato.controlcenter.domain.*;
 public class ForwardStrategy implements MovementStrategy {
 	
-	private Planet planet;
+	private Probe probe;
+	private String commands;
 	
-	public ForwardStrategy(Planet planet) {
-		this.planet = planet;
+	public ForwardStrategy(Probe probe, String commands) {
+		this.probe = probe;
+		this.commands = commands;
 	}
 
 	@Override
-	public void move() {
-		Coordinate coordinates = planet.getState().move(planet.getCoordinates());
-		planet.setCoordinates(coordinates);
+	public void move() throws DirectionException {
+		switch (Command.valueOf(commands)){
+			case MOVE ->  probe.changeCoordinates(
+					probe.getDirection().move(probe.getProbeCoordinates()));
+		}
 	}
 	
 }

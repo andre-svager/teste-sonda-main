@@ -27,11 +27,6 @@ public class MongoDBPlanetRepository implements PlanetsRepository {
     }
 
     @Override
-    public Planet save(Coordinate coordinates) {
-        return null;
-    }
-
-    @Override
     public Optional<Planet> findById(Integer id) {
         return Optional.empty();
     }

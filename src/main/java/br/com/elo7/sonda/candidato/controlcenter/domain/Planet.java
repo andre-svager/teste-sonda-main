@@ -1,5 +1,8 @@
 package br.com.elo7.sonda.candidato.controlcenter.domain;
 
+import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.PlanetsRepository;
+import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.ProbesRepository;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,11 +17,17 @@ public class Planet {
 		this.extension = coordinates;
 		this.id = generateSequence();
 	}
-
 	public Planet(Coordinate coordinates, Integer identifier) {
 		this.extension = coordinates;
 		Optional.ofNullable(identifier).orElse(generateSequence());
 	}
+	public Probe generateAProbe( Integer x, Integer y,
+								 char direction) throws DirectionException {
+		return new Probe(this, new Coordinate(x,y),String.valueOf(direction));
+	}
+
+	public Planet
+			save(PlanetsRepository repository){ return repository.save(this);}
 
 	private Integer generateSequence() {
 		return this.id = hashCode();
@@ -43,4 +52,3 @@ public class Planet {
 		return Objects.hash(id, extension);
 	}
 }
-

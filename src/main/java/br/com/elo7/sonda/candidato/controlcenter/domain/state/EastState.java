@@ -9,7 +9,7 @@ public class EastState implements DirectionState {
 
 	@Override
 	public Coordinate move(Coordinate coordinates) throws CoordinateException {
-		return new Coordinate(coordinates.x().increase(), coordinates.x().value());
+		return new Coordinate(coordinates.x().increase(), coordinates.y().value());
 	}
 	
 	@Override

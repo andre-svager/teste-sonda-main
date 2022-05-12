@@ -27,14 +27,6 @@ class InMemoryDatabase {
 			probesPerPlanet.put(planet, Lists.newArrayList());
 			return planet;
 		}
-
-		@Override
-		public Planet save(Coordinate coordinates) {
-			Planet saved = new Planet(coordinates);
-			probesPerPlanet.put(saved, Lists.newArrayList());
-			return saved;
-		}
-
 		@Override
 		public Optional<Planet> findById(Integer id) {
 			return probesPerPlanet.keySet()
@@ -52,11 +44,12 @@ class InMemoryDatabase {
 	@Repository	
 	public class ProbeDAO implements ProbesRepository {
 		@Override
-		public void save(Probe probe) {
+		public Probe save(Probe probe) {
 			List<Probe> probes = probesPerPlanet.get( probe.getPlanetIdentifier() );
 			//probe.setProbeId(nextSequence(probe.getId()));
 			probes.add(probe);
-		}
+            return probe;
+        }
 
 		@Override
 		public Optional<Probe> findById(int id) {
