@@ -54,9 +54,11 @@ Além de olhar para o código em si, pense a respeito dos seguintes tópicos:
  
 #### Observacoes sobre o contrato web
 ```set of sondas
- - Para cadastrar multiplas sonda, precisa coloca-las em um conjunto e este em um agregador. 
+ - Para cadastrar multiplas sondas, 'e necessario coloca-las em um conjunto
+ - Este conjunto deve estar em um agregador. 
     - Utilizado o Proprio Planeta como agregador.
- - O Agregador deve ter regras especificas para inserir e recuperar as sondas
+ - Seguindo DDD e S do SOLID, cada classe (Dominio) deve ter responsabilidade unica 
+ - Regras para instanciar um Dominio deve estar contida nele (Planet, Probe)   
 ```
 
 - Como eu movo uma sonda já pousada?

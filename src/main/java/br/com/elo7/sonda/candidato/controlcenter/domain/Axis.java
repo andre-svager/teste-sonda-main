@@ -22,5 +22,5 @@ public class Axis {
 
     public boolean isLessThan(Integer x) { return this.value < value; }
 
-    public boolean isPositive(Integer value) { return value != null && value < 0; }
+    public boolean isPositive(Integer value) { return value != null && value >= 0; }
 }

@@ -45,7 +45,7 @@ class InMemoryDatabase {
 	public class ProbeDAO implements ProbesRepository {
 		@Override
 		public Probe save(Probe probe) {
-			List<Probe> probes = probesPerPlanet.get( probe.getPlanetIdentifier() );
+			List<Probe> probes = probesPerPlanet.get( probe.getPlanet().getPlanetIdentifier() );
 			//probe.setProbeId(nextSequence(probe.getId()));
 			probes.add(probe);
             return probe;
@@ -62,6 +62,11 @@ class InMemoryDatabase {
 
 		@Override
 		public Integer nextSequence(Integer id) {
+			return null;
+		}
+
+		@Override
+		public List<Probe> findAllProbesPlanet(Integer planetId) {
 			return null;
 		}
 

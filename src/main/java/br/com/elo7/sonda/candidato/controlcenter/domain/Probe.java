@@ -7,26 +7,34 @@ import br.com.elo7.sonda.candidato.controlcenter.domain.strategy.ForwardStrategy
 import br.com.elo7.sonda.candidato.controlcenter.domain.strategy.MovementStrategy;
 import br.com.elo7.sonda.candidato.controlcenter.domain.strategy.RotateStrategy;
 
+import java.util.Objects;
+
 public class Probe {
 	private Integer id;
-	private Integer planetId;
+	private Planet planet;
 	private Coordinate coordinate;
 	private DirectionState direction;
 
 	public Probe( Planet planet,
 				  Coordinate coordinates,
-				  String state) throws CoordinateException, DirectionException {
+				  String state) throws ProbeOutOfRangeException, DirectionException {
+
 		this.coordinate = coordinates;
 		this.direction = DirectionFactory.direction(state);
-		this.planetId = planet.getPlanetIdentifier();
 
 		if( isInvalidCoordinates( planet.getPlanetCoordinates().x().value(),
-								  planet.getPlanetCoordinates().x().value())){
-			throw new CoordinateException();
+								  planet.getPlanetCoordinates().y().value())){
+			throw new ProbeOutOfRangeException();
 		}
+		this.planet = planet;
+		this.id = generateSequence();
 	}
 
-	public Probe move(String commands) throws DirectionException {
+	private Integer generateSequence() {
+		return hashCode();
+	}
+
+	public Probe move(String commands) throws DirectionException, CommandException {
 		for(char command : commands.toCharArray()){
 			MovementStrategy strategy = strategy(String.valueOf(command));
 			strategy.move();
@@ -34,8 +42,8 @@ public class Probe {
 		return this;
 	}
 
-	private MovementStrategy strategy(String command) {
-		return switch (Command.valueOf(command)){
+	private MovementStrategy strategy(String command) throws CommandException {
+		return switch (Command.toCommand(command.trim())){
 			case LEFT, RIGHT -> new RotateStrategy(this, command);
 			case MOVE -> new ForwardStrategy(this, command);
 		};
@@ -54,9 +62,6 @@ public class Probe {
 	public DirectionState
 			changeDirection(DirectionState state){return this.direction = state;}
 
-	public void
-			changeCoordinates(Coordinate coordinate){this.coordinate = coordinate;}
-
 	private boolean isLatitudeAboveZero() { return this.coordinate.y().value() < 0; }
 
 	private boolean isLongitudeAboveZero() { return this.coordinate.x().value() < 0; }
@@ -69,9 +74,22 @@ public class Probe {
 
 	public String getLatestDirection(){ return this.direction.type();}
 
-	public Integer getPlanetIdentifier(){ return this.planetId; }
+	public Planet getPlanet(){ return this.planet; }
 
 	public Integer getProbeIdentifier(){return this.id;}
 
 	public DirectionState getDirection() { return direction;}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Probe probe = (Probe) o;
+		return planet.getPlanetIdentifier().equals(probe.planet.getPlanetIdentifier()) && coordinate.equals(probe.coordinate);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(planet.getPlanetIdentifier(), coordinate);
+	}
 }

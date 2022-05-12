@@ -5,6 +5,7 @@ import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -31,6 +32,11 @@ public class MongoDBProbeRepository implements ProbesRepository {
     @Override
     public Integer nextSequence(Integer id) {
             return ++id;
+    }
+
+    @Override
+    public List<Probe> findAllProbesPlanet(Integer planetId) {
+        return null;
     }
 }
 

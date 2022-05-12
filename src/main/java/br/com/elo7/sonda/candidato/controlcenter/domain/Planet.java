@@ -22,7 +22,7 @@ public class Planet {
 		Optional.ofNullable(identifier).orElse(generateSequence());
 	}
 	public Probe generateAProbe( Integer x, Integer y,
-								 char direction) throws DirectionException {
+								 char direction) throws DirectionException, ProbeOutOfRangeException {
 		return new Probe(this, new Coordinate(x,y),String.valueOf(direction));
 	}
 
@@ -49,6 +49,6 @@ public class Planet {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, extension);
+		return Objects.hash(extension);
 	}
 }

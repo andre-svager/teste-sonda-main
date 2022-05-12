@@ -30,14 +30,18 @@ public class ControlCenterResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<List<ProbeResponse>> createProbe(@RequestBody ProbeRequest request) {
+	public ResponseEntity<List<ProbeResponse>> createProbe(@RequestBody ProbeRequest request) throws DirectionException {
 		try {
-			return ResponseEntity.ok(ProbeResponse.convertTo(
-					service.registerAProbeInAPlanet(request.getPlanetId(),
-													request.getX(),
-													request.getY(),
-													request.getDirection(),
-													request.getCommands())));
+			try {
+				return ResponseEntity.ok(ProbeResponse.convertTo(
+						service.registerAProbeInAPlanet(request.getPlanetId(),
+														request.getX(),
+														request.getY(),
+														request.getDirection(),
+														request.getCommands())));
+			} catch (CommandException e) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+			}
 		}catch (PlanetNotFoundException e){
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}

@@ -12,10 +12,11 @@ public class ForwardStrategy implements MovementStrategy {
 	}
 
 	@Override
-	public void move() throws DirectionException {
-		switch (Command.valueOf(commands)){
-			case MOVE ->  probe.changeCoordinates(
-					probe.getDirection().move(probe.getProbeCoordinates()));
+	public void move() throws DirectionException, CommandException {
+		switch (Command.toCommand(commands)){
+			case MOVE -> this.probe = new Probe( probe.getPlanet(),
+										    	 probe.getDirection().move(probe.getProbeCoordinates()),
+												 probe.getLatestDirection() );
 		}
 	}
 	

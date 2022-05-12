@@ -28,8 +28,8 @@ public class DomainControlCenterService implements ControlCenterService {
 
     @Override
     public List<Probe> registerAProbeInAPlanet( Integer planetId, int x, int y,
-                                                char direction, String commands) throws DirectionException,
-                                                                                        PlanetNotFoundException {
+                                                char direction, String commands)
+                                                    throws DirectionException,PlanetNotFoundException, CommandException{
         Optional.ofNullable( findPlanet(planetId)
                                 .generateAProbe( x, y, direction)
                                 .move(commands)
@@ -49,7 +49,7 @@ public class DomainControlCenterService implements ControlCenterService {
     }
 
     public List<Probe> landProbes(Planet planet, List<Probe> probes) {
-        List<Probe> convertedProbes = moveProbes(probes);
+        List<Probe> convertedProbes = null;//moveProbes(probes);
         convertedProbes.forEach(probe -> { // probe.setProbeId(probeRepository.nextSequence(probe.getId()));
                                             probeRepository.save(probe);});
         return convertedProbes;

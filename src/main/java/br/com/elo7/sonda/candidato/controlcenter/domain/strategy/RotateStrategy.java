@@ -1,8 +1,8 @@
 package br.com.elo7.sonda.candidato.controlcenter.domain.strategy;
 
 import br.com.elo7.sonda.candidato.controlcenter.domain.Command;
+import br.com.elo7.sonda.candidato.controlcenter.domain.CommandException;
 import br.com.elo7.sonda.candidato.controlcenter.domain.DirectionException;
-import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 
 public class RotateStrategy implements MovementStrategy {
@@ -17,8 +17,8 @@ public class RotateStrategy implements MovementStrategy {
 	}
 	
 	@Override
-	public void move() throws DirectionException {
-		switch (Command.valueOf(command)){
+	public void move() throws DirectionException, CommandException {
+		switch (Command.toCommand(command)){
 			case RIGHT -> probe.changeDirection(probe.getDirection().right());
 		    case LEFT ->  probe.changeDirection(probe.getDirection().left());
 		}
