@@ -8,17 +8,17 @@ import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 public class RotateStrategy implements MovementStrategy {
 	
 	private Probe probe;
-	private String command;
+	private Command command;
 	
-	public RotateStrategy(Probe probe, String command) {
+	public RotateStrategy(Probe probe, Command command) {
 		super();
 		this.probe = probe;
 		this.command = command;
 	}
-	
+
 	@Override
 	public void move() throws DirectionException, CommandException {
-		switch (Command.toCommand(command)){
+		switch (this.command){
 			case RIGHT -> probe.changeDirection(probe.getDirection().right());
 		    case LEFT ->  probe.changeDirection(probe.getDirection().left());
 		}

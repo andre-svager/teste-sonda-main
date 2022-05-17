@@ -7,6 +7,7 @@ import br.com.elo7.sonda.candidato.controlcenter.domain.strategy.ForwardStrategy
 import br.com.elo7.sonda.candidato.controlcenter.domain.strategy.MovementStrategy;
 import br.com.elo7.sonda.candidato.controlcenter.domain.strategy.RotateStrategy;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Probe {
@@ -34,16 +35,16 @@ public class Probe {
 		return hashCode();
 	}
 
-	public Probe move(String commands) throws DirectionException, CommandException {
-		for(char command : commands.toCharArray()){
-			MovementStrategy strategy = strategy(String.valueOf(command));
+	public Probe move(List<Command> commands) throws DirectionException, CommandException {
+		for(Command command : commands){
+			MovementStrategy strategy = strategy(command);
 			strategy.move();
 		}
 		return this;
 	}
 
-	private MovementStrategy strategy(String command) throws CommandException {
-		return switch (Command.toCommand(command.trim())){
+	private MovementStrategy strategy(Command command) throws CommandException {
+		return switch (command){
 			case LEFT, RIGHT -> new RotateStrategy(this, command);
 			case MOVE -> new ForwardStrategy(this, command);
 		};

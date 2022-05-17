@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/planet-with-probes")
+@RequestMapping("/control-center")
 public class ControlCenterResource {
 
 	@Autowired
@@ -30,9 +30,9 @@ public class ControlCenterResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<List<ProbeResponse>> createProbe(@RequestBody ProbeRequest request) throws DirectionException {
+	public ResponseEntity<List<ProbeResponse>>
+				createProbe(@RequestBody ProbeRequest request) throws DirectionException {
 		try {
-			try {
 				return ResponseEntity.ok(ProbeResponse.convertTo(
 						service.registerAProbeInAPlanet(request.getPlanetId(),
 														request.getX(),
@@ -41,10 +41,9 @@ public class ControlCenterResource {
 														request.getCommands())));
 			} catch (CommandException e) {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+			}catch (PlanetNotFoundException e){
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 			}
-		}catch (PlanetNotFoundException e){
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-		}
 	}
 
 	@PatchMapping(value = "/probe/{id}/move/{commands}")

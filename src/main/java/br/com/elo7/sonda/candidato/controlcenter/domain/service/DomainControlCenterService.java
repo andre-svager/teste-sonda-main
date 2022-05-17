@@ -5,11 +5,8 @@ import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.Pro
 import br.com.elo7.sonda.candidato.controlcenter.domain.*;
 import org.springframework.data.domain.Sort;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class DomainControlCenterService implements ControlCenterService {
 
@@ -27,8 +24,8 @@ public class DomainControlCenterService implements ControlCenterService {
     }
 
     @Override
-    public List<Probe> registerAProbeInAPlanet( Integer planetId, int x, int y,
-                                                char direction, String commands)
+    public List<Probe> registerAProbeInAPlanet(Integer planetId, int x, int y,
+                                               Direction direction, List<Command> commands)
                                                     throws DirectionException,PlanetNotFoundException, CommandException{
         Optional.ofNullable( findPlanet(planetId)
                                 .generateAProbe( x, y, direction)

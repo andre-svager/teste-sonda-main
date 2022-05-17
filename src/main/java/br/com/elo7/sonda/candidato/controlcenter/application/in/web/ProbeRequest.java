@@ -1,9 +1,6 @@
 package br.com.elo7.sonda.candidato.controlcenter.application.in.web;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
-import br.com.elo7.sonda.candidato.controlcenter.domain.DirectionException;
-import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
-import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
+import br.com.elo7.sonda.candidato.controlcenter.domain.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -15,15 +12,15 @@ public class ProbeRequest {
 	@JsonProperty
 	private int y;
 	@JsonProperty
-	private char direction;
+	private Direction direction;
 	@JsonProperty
-	private String commands;
+	private List<Command> commands;
 	@JsonProperty(required = true)
 	private Integer planetId;
 
 	public ProbeRequest(){}
 
-	public ProbeRequest(int x, int y, char direction) {
+	public ProbeRequest(int x, int y, Direction direction) {
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
@@ -33,29 +30,22 @@ public class ProbeRequest {
 
 	public int getY() { return y;}
 
-	public char getDirection() { return direction;}
+	public Direction getDirection() { return direction;}
 
-	public String getCommands() {return commands;}
+	public List<Command> getCommands() {return commands;}
 
 	public Integer getPlanetId() {return planetId;}
 
 	/**
-	 * @param planetId
-	 * @param x
-	 * @param y
-	 * @param direction
-	 * @param commands
 	 * @return
 	 * @throws DirectionException
 	 * This is not a better locale to create a Probe. So I sent attributes in a method body
 	 * Or maybe in a future create a Map to do it.
 	 */
-/*
-	public Probe convertTo(String planetId, int x, int y, char direction, String commands) throws DirectionException {
+/**public Probe convertTo(String planetId, int x, int y, char direction, String commands) throws DirectionException {
 		return new Probe( new Coordinate(x, y), String.valueOf(this.direction), this.commands);
-	}
-*/
-	public String getProbeCommands(){
+	}*/
+	public List<Command> getProbeCommands(){
 		return this.commands;
 	}
 
@@ -63,7 +53,7 @@ public class ProbeRequest {
 		return probes.stream()
 					 .map(p -> new ProbeRequest( p.getProbeCoordinates().x().value(),
 												 p.getProbeCoordinates().y().value(),
-												 p.getLatestDirection().charAt(0))).collect(Collectors.toList());
+												 Direction.valueOf(p.getLatestDirection()))).collect(Collectors.toList());
 	}
 
     public Planet concertPlanet() {
