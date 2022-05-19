@@ -1,7 +1,5 @@
 package br.com.elo7.sonda.candidato.controlcenter.application.in.web;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
-import br.com.elo7.sonda.candidato.controlcenter.domain.DirectionException;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -39,26 +37,6 @@ public class ProbeRequest {
 
 	public Integer getPlanetId() {return planetId;}
 
-	/**
-	 * @param planetId
-	 * @param x
-	 * @param y
-	 * @param direction
-	 * @param commands
-	 * @return
-	 * @throws DirectionException
-	 * This is not a better locale to create a Probe. So I sent attributes in a method body
-	 * Or maybe in a future create a Map to do it.
-	 */
-/*
-	public Probe convertTo(String planetId, int x, int y, char direction, String commands) throws DirectionException {
-		return new Probe( new Coordinate(x, y), String.valueOf(this.direction), this.commands);
-	}
-*/
-	public String getProbeCommands(){
-		return this.commands;
-	}
-
 	public static List<ProbeRequest> convertTo(List<Probe> probes) {
 		return probes.stream()
 					 .map(p -> new ProbeRequest( p.getProbeCoordinates().x().value(),
@@ -67,6 +45,6 @@ public class ProbeRequest {
 	}
 
     public Planet concertPlanet() {
-		return new Planet( new Coordinate(x,y));
+		return new Planet(x, y);
     }
 }

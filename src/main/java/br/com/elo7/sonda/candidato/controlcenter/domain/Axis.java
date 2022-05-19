@@ -10,7 +10,8 @@ public class Axis {
         this.value = value;
     }
 
-    public Axis() { this.value = 0; }
+    //Utilized to SpringData
+    private Axis() { }
 
     public int increase() { return ++ this.value;}
 

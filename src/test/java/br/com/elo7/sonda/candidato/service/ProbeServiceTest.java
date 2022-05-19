@@ -16,7 +16,7 @@ public class ProbeServiceTest {
 	private ControlCenterService subject;
 
 	private Planet generateAPlanet(){
-		return new Planet(new Coordinate(5,5));
+		return new Planet(5, 5);
 	}
 	
 	@Test

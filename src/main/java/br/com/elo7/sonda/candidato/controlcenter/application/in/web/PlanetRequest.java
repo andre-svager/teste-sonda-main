@@ -10,7 +10,11 @@ public class PlanetRequest {
     @JsonProperty
     private int y;
 
-    public Coordinate toCoordinates() throws CoordinateException {
-        return new Coordinate(x, y);
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

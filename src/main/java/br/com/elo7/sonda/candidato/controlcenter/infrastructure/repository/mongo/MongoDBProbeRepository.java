@@ -1,6 +1,7 @@
 package br.com.elo7.sonda.candidato.controlcenter.infrastructure.repository.mongo;
 
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.ProbesRepository;
+import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -36,12 +37,6 @@ public class MongoDBProbeRepository implements ProbesRepository {
 
     @Override
     public List<Probe> findAllProbesPlanet(Integer planetId) {
-        return null;
+        return probeRepo.findAllProbeByPlanetId(planetId);
     }
 }
-
-    /*@Override
-    public Optional<Probe> findByCoordinates(int x, int y) {
-        return probeRepo.findByCoordinates(x,y);
-    }*/
-

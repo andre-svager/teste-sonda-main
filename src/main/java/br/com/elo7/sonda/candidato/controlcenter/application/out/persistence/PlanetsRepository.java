@@ -1,6 +1,5 @@
 package br.com.elo7.sonda.candidato.controlcenter.application.out.persistence;
 
-import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import org.springframework.data.domain.Sort;
 

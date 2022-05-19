@@ -6,6 +6,9 @@ public class Coordinate {
     private Axis x;
     private Axis y;
 
+    //Utilized to SpringData
+    private Coordinate(){}
+
     public Coordinate(Integer x, Integer y) throws CoordinateException {
         this.x = new Axis(x);
         this.y = new Axis(y);

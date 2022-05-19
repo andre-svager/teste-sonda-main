@@ -55,12 +55,12 @@ Além de olhar para o código em si, pense a respeito dos seguintes tópicos:
 #### Observacoes sobre o contrato web
 ```set of sondas
  - Para cadastrar multiplas sondas, 'e necessario coloca-las em um conjunto
- - Este conjunto deve estar em um agregador. 
-    - Utilizado o Proprio Planeta como agregador.
- - Seguindo DDD e S do SOLID, cada classe (Dominio) deve ter responsabilidade unica 
- - Regras para instanciar um Dominio deve estar contida nele (Planet, Probe)   
+ - Este conjunto deve estar agregado em uma estrutura que o instancie e controle a colecao desses elementos. 
+    - Foi Utilizado o a ideia de Planeta (coordenadas) em conjunto com o Agregate -> PlanetControl.
+ - Seguindo Principio da responsabilidade unica e DDD, as classes (Dominio) 
+    - Probe: Contem todas restricoes de negocio e delega a instanciacao para PlanetControl
+    - PlanetControl: cria instancias de Probe e controla a insercao na colecao   
 ```
-
 - Como eu movo uma sonda já pousada?
 
 #### Observacoes sobre movimentacao da Sonda
@@ -116,7 +116,14 @@ Obs: Se você está em dúvida se a sua pretenção é senior ou não procure no
 - Certifique-se que a porta 8080 esteja desocupada;
 - Certifique-se de que você possui o maven instalado localmente;
 - Certifique-se de que você está na raiz do projeto;
+- Confira se tem o docker-compose instalado no ambiente:
+  - Caso negativo, pode proceder com a instalacao:
+  - [INSTALAR DOCKER-COMPOSE](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04)
+- Atraves do docker-compose, suba o ambiente no diretorio $/infra
+  - sudo docker-compose up
 - Rode o `./mvnw spring-boot:run`
+- Documentacao Disponivel em: 
+  - http://localhost:8080/swg.html 
 
 Com isso as dependências serão baixadas e a API subirá na porta `8080`;
 

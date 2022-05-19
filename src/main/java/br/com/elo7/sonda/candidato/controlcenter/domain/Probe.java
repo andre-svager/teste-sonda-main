@@ -6,7 +6,6 @@ import br.com.elo7.sonda.candidato.controlcenter.domain.state.DirectionState;
 import br.com.elo7.sonda.candidato.controlcenter.domain.strategy.ForwardStrategy;
 import br.com.elo7.sonda.candidato.controlcenter.domain.strategy.MovementStrategy;
 import br.com.elo7.sonda.candidato.controlcenter.domain.strategy.RotateStrategy;
-
 import java.util.Objects;
 
 public class Probe {
@@ -15,11 +14,16 @@ public class Probe {
 	private Coordinate coordinate;
 	private DirectionState direction;
 
+
+	private Probe(Integer id){ this.id = id; }
+
+	private Probe(){}
+
 	public Probe( Planet planet,
-				  Coordinate coordinates,
+				  Coordinate coordinate,
 				  String state) throws ProbeOutOfRangeException, DirectionException {
 
-		this.coordinate = coordinates;
+		this.coordinate = coordinate;
 		this.direction = DirectionFactory.direction(state);
 
 		if( isInvalidCoordinates( planet.getPlanetCoordinates().x().value(),
@@ -66,9 +70,9 @@ public class Probe {
 
 	private boolean isLongitudeAboveZero() { return this.coordinate.x().value() < 0; }
 
-	public boolean isOutOfPlanetLongitude(int xAxis) { return coordinate.x().value() > xAxis ;}
+	private boolean isOutOfPlanetLongitude(int xAxis) { return coordinate.x().value() > xAxis ;}
 
-	public boolean isOutOfPlanetLatitude(int yAxis) { return coordinate.y().value() > yAxis; }
+	private boolean isOutOfPlanetLatitude(int yAxis) { return coordinate.y().value() > yAxis; }
 
 	public Coordinate getProbeCoordinates(){return this.coordinate;}
 
@@ -85,11 +89,14 @@ public class Probe {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Probe probe = (Probe) o;
-		return planet.getPlanetIdentifier().equals(probe.planet.getPlanetIdentifier()) && coordinate.equals(probe.coordinate);
+		return planet.getId().equals(probe.planet.getId()) && coordinate.equals(probe.coordinate);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(planet.getPlanetIdentifier(), coordinate);
+		return Objects.hash(planet.getId(),
+							coordinate.x().value(),
+							coordinate.y().value());
 	}
+
 }

@@ -23,8 +23,13 @@ public class ProbeResponse {
 
 	public static List<ProbeResponse> convertTo(List<Probe> probes) {
 		return probes.stream()
-					 .map(p -> new ProbeResponse( p.getProbeCoordinates().x().value(),
-												 p.getProbeCoordinates().y().value(),
-												 p.getLatestDirection())).collect(Collectors.toList());
+					 .map(p -> convertTo(p)).collect(Collectors.toList());
 	}
+
+	public static ProbeResponse convertTo(Probe p){
+		return new ProbeResponse( p.getProbeCoordinates().x().value(),
+						   p.getProbeCoordinates().y().value(),
+						   p.getLatestDirection());
+	}
+
 }

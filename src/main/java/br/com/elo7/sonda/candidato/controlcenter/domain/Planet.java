@@ -1,33 +1,55 @@
 package br.com.elo7.sonda.candidato.controlcenter.domain;
 
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.PlanetsRepository;
-import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.ProbesRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static br.com.elo7.sonda.candidato.controlcenter.domain.MessageType.*;
 
 public class Planet {
 
 	private Integer id;
 	private Coordinate extension;
-	private List<Probe> probes;
 
-	public Planet(Coordinate coordinates) {
-		this.extension = coordinates;
+	public Planet(int x, int y) {
+		this.extension = new Coordinate(x,y);
 		this.id = generateSequence();
 	}
-	public Planet(Coordinate coordinates, Integer identifier) {
-		this.extension = coordinates;
-		Optional.ofNullable(identifier).orElse(generateSequence());
+
+	public Planet(Integer id) {
+		this.id = id;
 	}
+
+	private Planet(){}
+
+	public Planet(int x, int y, Integer identifier, PlanetsRepository repository) {
+		this.extension = new Coordinate(x,y);
+		Optional.ofNullable( repository.findById(identifier).map(a -> checkIfPlanetHasSameCoordinates(a)).get() )
+				.orElse(new Planet(x, y, generateSequence(), repository));
+	}
+
+	public Planet(Integer identifier, PlanetsRepository repository) {
+		Optional.ofNullable( repository.findById(identifier).map(a -> loadRecoveredPlanet(a)).get() )
+				.orElseThrow(() -> new PlanetException(PLANET_NOT_FOUND));
+	}
+
 	public Probe generateAProbe( Integer x, Integer y,
 								 char direction) throws DirectionException, ProbeOutOfRangeException {
 
-		//probes.computeIfAbsent(account.getId() , ArrayList::new ).add(account.getBalance());
-
 		return new Probe(this, new Coordinate(x,y),String.valueOf(direction));
+	}
+
+	private Planet loadRecoveredPlanet(Planet planet) {
+		this.extension = planet.getPlanetCoordinates();
+		this.id = planet.getId();
+		return planet;
+	}
+
+	private Planet checkIfPlanetHasSameCoordinates(Planet planet) {
+		if( this.extension
+				.equals(planet.getPlanetCoordinates())) throw new PlanetException(PLANET_DUPLICATED);
+		return planet;
 	}
 
 	public Planet
@@ -37,7 +59,7 @@ public class Planet {
 		return this.id = hashCode();
 	}
 
-	public Integer getPlanetIdentifier() { return id; }
+	public Integer getId() { return id; }
 
 	public Coordinate getPlanetCoordinates(){
 		return extension;
@@ -53,6 +75,6 @@ public class Planet {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(extension);
+		return Objects.hash(extension.x().value(), extension.y().value());
 	}
 }

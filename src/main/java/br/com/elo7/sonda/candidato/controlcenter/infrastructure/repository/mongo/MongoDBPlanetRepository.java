@@ -1,7 +1,6 @@
 package br.com.elo7.sonda.candidato.controlcenter.infrastructure.repository.mongo;
 
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.PlanetsRepository;
-import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Sort;
@@ -27,12 +26,12 @@ public class MongoDBPlanetRepository implements PlanetsRepository {
     }
 
     @Override
-    public Optional<Planet> findById(Integer id) {
-        return Optional.empty();
+    public Optional<Planet> findById(Integer id){
+        return planetRepository.findById(id);
     }
 
     @Override
     public List<Planet> findAll(Sort sort) {
-        return planetRepository.findAll(sort);
+        return planetRepository.findAll();
     }
 }

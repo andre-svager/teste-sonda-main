@@ -3,49 +3,50 @@ package br.com.elo7.sonda.candidato.controlcenter.domain.service;
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.PlanetsRepository;
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.ProbesRepository;
 import br.com.elo7.sonda.candidato.controlcenter.domain.*;
+import br.com.elo7.sonda.candidato.controlcenter.domain.factory.DirectionFactory;
 import org.springframework.data.domain.Sort;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
+
+import static br.com.elo7.sonda.candidato.controlcenter.domain.MessageType.PLANET_NOT_FOUND;
 
 public class DomainControlCenterService implements ControlCenterService {
 
     private final ProbesRepository probeRepository;
     private final PlanetsRepository planetRepository;
 
-    public DomainControlCenterService(ProbesRepository probeRepository, PlanetsRepository planetsRepository) {
+    public DomainControlCenterService( ProbesRepository probeRepository,
+                                       PlanetsRepository planetsRepository) {
         this.probeRepository = probeRepository;
         this.planetRepository = planetsRepository;
     }
 
     @Override
-    public Planet generateAPlanet(Coordinate toCoordinates) {
-        return new Planet(toCoordinates).save(planetRepository);
+    public Planet generateAPlanet(int x, int y) {
+        return new Planet(x, y).save(planetRepository);
     }
 
     @Override
-    public List<Probe> registerAProbeInAPlanet( Integer planetId, int x, int y,
-                                                char direction, String commands)
-                                                    throws DirectionException,PlanetNotFoundException, CommandException{
-        Optional.ofNullable( findPlanet(planetId)
-                                .generateAProbe( x, y, direction)
-                                .move(commands)
-                                .save(probeRepository) )
-                .orElseThrow(PlanetNotFoundException::new);
-
-        return findAllProbesInAPlanet(planetId);
+    public Probe registerAProbeInAPlanet(Integer planetId, int x, int y,
+                                         char direction, String commands)
+                                                    throws DirectionException, PlanetException, CommandException{
+                return Optional.ofNullable(findPlanet(planetId)
+                                                 .generateAProbe(x, y, direction)
+                                                 .move(commands)
+                                                 .save(probeRepository))
+                               .orElseThrow(() -> new PlanetException(PLANET_NOT_FOUND));
     }
 
-    private List<Probe> findAllProbesInAPlanet(Integer planetId) {
+    public List<Probe> findAllProbesInAPlanet(Integer planetId) {
         return probeRepository.findAllProbesPlanet(planetId);
     }
 
+
+
     @Override
     public Planet findPlanet(int id) {
-        return null;
+        return new Planet(id, planetRepository);
     }
 
     public List<Probe> landProbes(Planet planet, List<Probe> probes) {
@@ -55,16 +56,14 @@ public class DomainControlCenterService implements ControlCenterService {
         return convertedProbes;
     }
 
-    public Planet getPlanet(Integer id) {
-        return planetRepository.findById(id).orElseThrow(PlanetNotFoundException::new);
-    }
-
     public List<Planet> getAllPlanets() {
-        return planetRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+        return planetRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
-    public void verifyIfThereIsAProbeInSamePosition(int x, int y){
-        //probeRepository.findAll().filter( p -> { throw new ProbeCollisionException(); });
+    @Override
+    public Probe movementAProbe(int id, String commands) throws CommandException, DirectionException {
+        Probe probe = probeRepository.findById(id).
+                              orElseThrow(() -> new ProbeOutOfRangeException());
+        return probe.move(commands).save(probeRepository);
     }
-
 }

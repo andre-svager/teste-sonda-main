@@ -2,7 +2,6 @@ package br.com.elo7.sonda.candidato.controlcenter.infrastructure.repository.inme
 
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.PlanetsRepository;
 import br.com.elo7.sonda.candidato.controlcenter.application.out.persistence.ProbesRepository;
-import br.com.elo7.sonda.candidato.controlcenter.domain.Coordinate;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Planet;
 import br.com.elo7.sonda.candidato.controlcenter.domain.Probe;
 import com.google.common.collect.Lists;
@@ -31,7 +30,7 @@ class InMemoryDatabase {
 		public Optional<Planet> findById(Integer id) {
 			return probesPerPlanet.keySet()
 								  .stream()
-								  .filter(planet -> planet.getPlanetIdentifier() == id)
+								  .filter(planet -> planet.getId() == id)
 								  .findFirst();
 		}
 
@@ -45,7 +44,7 @@ class InMemoryDatabase {
 	public class ProbeDAO implements ProbesRepository {
 		@Override
 		public Probe save(Probe probe) {
-			List<Probe> probes = probesPerPlanet.get( probe.getPlanet().getPlanetIdentifier() );
+			List<Probe> probes = probesPerPlanet.get( probe.getPlanet().getId() );
 			//probe.setProbeId(nextSequence(probe.getId()));
 			probes.add(probe);
             return probe;

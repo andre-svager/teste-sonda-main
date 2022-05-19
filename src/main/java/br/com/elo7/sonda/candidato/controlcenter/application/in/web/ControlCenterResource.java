@@ -23,14 +23,15 @@ public class ControlCenterResource {
 	public ResponseEntity<PlanetResponse> createPlanet(@RequestBody PlanetRequest request) {
 		try {
 			return new ResponseEntity<PlanetResponse>(
-					new PlanetResponse( service.generateAPlanet( request.toCoordinates() ) ), HttpStatus.CREATED);
+					new PlanetResponse( service.generateAPlanet( request.getX(),
+																 request.getY() ) ), HttpStatus.CREATED);
 		} catch (CoordinateException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}
 	}
 
-	@PostMapping
-	public ResponseEntity<List<ProbeResponse>> createProbe(@RequestBody ProbeRequest request) throws DirectionException {
+	@PostMapping("/probes")
+	public ResponseEntity<ProbeResponse> createProbe(@RequestBody ProbeRequest request) throws DirectionException {
 		try {
 			try {
 				return ResponseEntity.ok(ProbeResponse.convertTo(
@@ -42,18 +43,31 @@ public class ControlCenterResource {
 			} catch (CommandException e) {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 			}
-		}catch (PlanetNotFoundException e){
+		}catch (PlanetException e){
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
+	}
+
+	@GetMapping(value = "/probes/{planetId}")
+	public ResponseEntity<List<ProbeResponse>> recoverAllProbesInAPlanet(
+													@PathVariable Integer planetId) throws DirectionException {
+		try {
+				return ResponseEntity.ok(ProbeResponse.convertTo(service.findAllProbesInAPlanet(planetId)));
+		}catch (PlanetException e){
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}
 	}
 
 	@PatchMapping(value = "/probe/{id}/move/{commands}")
 	@ResponseBody
-	ResponseEntity<Void> move( @PathVariable int id,
-							   @RequestBody String commands) throws Exception {
-		//ProbeResponse explorer = service.findExplorer(id);
-		//service.move(explorer, command);
-		return ResponseEntity.noContent().build();
+	ResponseEntity<ProbeResponse> move( @PathVariable int id,
+										@PathVariable String commands) throws Exception {
+		try {
+			return ResponseEntity.ok(
+						ProbeResponse.convertTo(service.movementAProbe(id, commands)));
+		} catch (DirectionException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
 	}
 
 	@RequestMapping(value = "/planet/{id}", method = RequestMethod.GET)
@@ -61,4 +75,11 @@ public class ControlCenterResource {
 	ResponseEntity<PlanetResponse> getPlanet(@PathVariable int id) {
 		return ResponseEntity.ok(PlanetResponse.convertTo(service.findPlanet(id)));
 	}
+
+	@RequestMapping(value = "/planet/all", method = RequestMethod.GET)
+	@ResponseBody
+	ResponseEntity<List<PlanetResponse>> getAllPlanets() {
+		return ResponseEntity.ok(PlanetResponse.convertTo(service.getAllPlanets()));
+	}
+
 }
